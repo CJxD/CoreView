@@ -1,0 +1,86 @@
+﻿using System;
+using System.Media;
+using System.Windows.Forms;
+
+namespace CoreView
+{
+    public partial class ErrorDialogue : Form
+    {
+        public ErrorDialogue(Exception e)
+        {
+            InitializeComponent();
+			// Cases for small exceptions
+            // If the exception is a Management exception, the text is access denied, and the error hasn't already been shown,
+            // show the error.
+            if (e is System.Management.ManagementException && e.Message == "Access denied ")
+			{
+                if (!Configuration.PermissionErrorDisplayed)
+                {
+                    MessageBox.Show("Access was denied for reading some data. "
+                        + "Please try running as an administrator to see this data."
+                        + Environment.NewLine
+                        + "Successfully gathered data will display as normal.",
+                        "Permission Denied",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+                    Configuration.PermissionErrorDisplayed = true;
+                }
+			}
+            // Similar approach for all other exceptions
+            // Other ManagementExceptions and NullReferenceExceptions will go here if ReadErrorDisplayed is false
+            else if (e is System.Management.ManagementException || e is NullReferenceException)
+            {
+                if (!Configuration.ReadErrorDisplayed)
+                {
+                    MessageBox.Show("Some data could not be read."
+                        + Environment.NewLine
+                        + "Successfully gathered data will display as normal.",
+                        "Data Read Failure",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning
+                    );
+                    Configuration.ReadErrorDisplayed = true;
+                }
+            }
+            // Database errors go here
+            else if (e is System.Data.SQLite.SQLiteException)
+            {
+                if (!Configuration.DatabaseErrorDisplayed)
+                {
+                    MessageBox.Show("There was a problem with accessing the Heuristic Database. "
+                        + "Please check the database isn't opened in another program "
+                        + "or contaminated.",
+                        "Database Failure",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error
+                    );
+                    Configuration.DatabaseErrorDisplayed = true;
+                }
+            }
+            // Other exceptions display a bigger error
+			else
+			{
+				// Play an error sound
+				SystemSounds.Exclamation.Play();
+				this.Text = "Unhandled Exception - " + e.Message;
+				this.error_details.Text = e.Source
+					+ " Exception:"
+					+ Environment.NewLine
+					+ "   " + e.Message
+					+ Environment.NewLine
+					+ Environment.NewLine
+					+ "Stack Trace:"
+					+ Environment.NewLine
+					+ e.StackTrace;
+				this.error_close.Focus();
+				this.ShowDialog();
+			}
+        }
+
+        private void error_close_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+    }
+}

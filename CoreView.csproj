@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7D9EE341-ED95-4294-B6AC-0512EE7884A1}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CoreView</RootNamespace>
+    <AssemblyName>CoreView</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkSubset>
+    </TargetFrameworkSubset>
+    <StartupObject>CoreView.Program</StartupObject>
+    <ApplicationIcon>Logo.ico</ApplicationIcon>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="OpenHardwareMonitorLib, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\OpenHardwareMonitor\OpenHardwareMonitorLib.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Management" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClassList.cs" />
+    <Compile Include="Configuration.cs" />
+    <Compile Include="DatabaseAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DatabaseAdd.Designer.cs">
+      <DependentUpon>DatabaseAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindowSorting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindowSearching.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Database.cs" />
+    <Compile Include="ErrorDialogue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ErrorDialogue.Designer.cs">
+      <DependentUpon>ErrorDialogue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Graphs.cs" />
+    <Compile Include="HardwareContainers.cs" />
+    <Compile Include="DataRetreiver.cs" />
+    <Compile Include="MainWindowDatabase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindowHardwareSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindowMenuStrip.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindowPopulation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindowUpdates.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OptionsDialogue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OptionsDialogue.Designer.cs">
+      <DependentUpon>OptionsDialogue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PCClass.cs" />
+    <Compile Include="SMARTData.cs" />
+    <Compile Include="MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="DatabaseAdd.resx">
+      <DependentUpon>DatabaseAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ErrorDialogue.resx">
+      <DependentUpon>ErrorDialogue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OptionsDialogue.resx">
+      <DependentUpon>OptionsDialogue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Splash.resx">
+      <DependentUpon>Splash.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="SoftwareContainers.cs" />
+    <Compile Include="Sorting.cs" />
+    <Compile Include="Splash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Splash.Designer.cs">
+      <DependentUpon>Splash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StringLogicalComparer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Logo.ico" />
+    <Content Include="Resources\167.png" />
+    <None Include="Resources\System.Data.SQLite_x64.dll" />
+    <None Include="Resources\System.Data.SQLite_x86.dll" />
+    <None Include="Resources\OpenHardwareMonitorLib.dll" />
+    <None Include="Resources\Address.png" />
+    <None Include="Resources\Sharing.png" />
+    <None Include="Resources\IRQ.png" />
+    <None Include="Resources\Process.png" />
+    <None Include="Resources\Database.png" />
+    <None Include="Resources\Log.png" />
+    <None Include="Resources\Logo.ico" />
+    <None Include="Resources\Software.png" />
+    <None Include="Resources\Driver.png" />
+    <None Include="Resources\USB.png" />
+    <None Include="Resources\PCI.png" />
+    <None Include="Resources\Optical.png" />
+    <None Include="Resources\HardDrive.png" />
+    <None Include="Resources\Network.png" />
+    <None Include="Resources\Graphics.png" />
+    <None Include="Resources\Memory.png" />
+    <None Include="Resources\Motherboard.png" />
+    <None Include="Resources\Processor.png" />
+    <None Include="Resources\config.xml" />
+    <None Include="Resources\Splash.png" />
+    <None Include="Resources\Stat Bad.png" />
+    <None Include="Resources\Stat Warn.png" />
+    <None Include="Resources\Stat Good.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
