@@ -30,7 +30,7 @@ namespace CoreView
 
 			// Graphs and Volatile Info \\
             // If the selected index falls within the actual number of processors, continue
-            if (currentComputer.Processor.Count > processor_list.SelectedIndex && currentComputer.Processor.Count > 0)
+            if (currentComputer.Processor.Count > processor_list.SelectedIndex && processor_list.SelectedIndex >= 0)
             {
                 if (processorGraph != null)
                 {
@@ -53,20 +53,20 @@ namespace CoreView
                 }
             }
 
-            if (currentComputer.Motherboard.Count > motherboard_list.SelectedIndex && currentComputer.Motherboard.Count > 0)
+            if (currentComputer.Motherboard.Count > motherboard_list.SelectedIndex && motherboard_list.SelectedIndex >= 0)
             {
                 // Update values
                 currentComputer.Motherboard[motherboard_list.SelectedIndex].GetVolatileInfo();
             }
 
-            if (currentComputer.GraphicsAdapter.Count > graphics_list.SelectedIndex && currentComputer.GraphicsAdapter.Count > 0)
+            if (currentComputer.GraphicsAdapter.Count > graphics_list.SelectedIndex && graphics_list.SelectedIndex >= 0)
             {
                 currentComputer.GraphicsAdapter[graphics_list.SelectedIndex].GetVolatileInfo();
                 graphicsGraph.Series[0].AddValue(currentComputer.GraphicsAdapter[graphics_list.SelectedIndex].Temperature);
                 graphicsGraph.Redraw();
             }
 
-            if (currentComputer.HardDrive.Count > harddrive_list.SelectedIndex && currentComputer.HardDrive.Count > 0)
+            if (currentComputer.HardDrive.Count > harddrive_list.SelectedIndex && harddrive_list.SelectedIndex >= 0)
             {
                 currentComputer.HardDrive[harddrive_list.SelectedIndex].GetVolatileInfo();
             }
@@ -74,10 +74,11 @@ namespace CoreView
             // Database search results before the thread has finished
             if (temporary_database_details.Items.Count != database_details.Items.Count)
             {
+                // Get the database_details list from items in the temporary_database_details list
                 database_details.Items.Clear();
                 foreach (ListViewItem item in temporary_database_details.Items)
                 {
-                    database_details.Items.Add(item);
+                    database_details.Items.Add((ListViewItem)item.Clone());
                 }
             }
         }

@@ -248,6 +248,14 @@ namespace CoreView
             {17, "Power Save - Warning"}
         };
 
+		private static Dictionary<UInt16, string> EventTypeRef = new Dictionary<UInt16, string> {
+            {1, "Error"},
+            {2, "Warning"},
+            {3, "Information"},
+            {4, "Security Audit Success"},
+            {5, "Security Audit Failure"},
+        };
+
         private static Dictionary<UInt16, string> FamilyRef = new Dictionary<UInt16, string> {
             {1, "Other"},
             {2, "Unknown"},
@@ -389,14 +397,6 @@ namespace CoreView
             {11, "3DRAM"},
             {12, "SDRAM"},
             {160, "SGRAM"}
-        };
-
-        private static Dictionary<UInt16, string> EventTypeRef = new Dictionary<UInt16, string> {
-            {1, "Error"},
-            {2, "Warning"},
-            {3, "Information"},
-            {4, "Security Audit Success"},
-            {5, "Security Audit Failure"},
         };
 
         // Functions to make references to the above dictionaries
@@ -614,6 +614,20 @@ namespace CoreView
             try
             {
                 return (byte[])managementObject[field];
+            }
+            catch (Exception e)
+            {
+                ErrorDialogue errorReporter = new ErrorDialogue(e);
+                errorReporter.ShowDialog();
+                return null;
+            }
+        }
+        // Special case for string array
+        public static string[] GetValueArray(ManagementObject managementObject, string field)
+        {
+            try
+            {
+                return (string[])managementObject[field];
             }
             catch (Exception e)
             {

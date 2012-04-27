@@ -46,6 +46,8 @@ namespace CoreView
             options_loadontabs.Checked = true;
             options_loadonstart.Checked = Configuration.LoadWMIAtStart;
             options_loadhwonstart.Checked = Configuration.LoadHardwareAtStart;
+			options_onlyerrors.Checked = Configuration.OnlyErrorLogs;
+			options_logage.Text = Configuration.LogAgeMax.ToString();
 
             // If Show Splash is checked, then disable the other loading options
             if (Configuration.ShowSplash)
@@ -105,11 +107,30 @@ namespace CoreView
 
         private void options_showsplash_CheckedChanged(object sender, EventArgs e)
         {
+			Configuration.ShowSplash = options_showsplash.Checked;
             options_loadonstart.Checked = true;
             // Enable or disable the other loading buttons
             options_loadontabs.Enabled = !options_showsplash.Checked;
             options_loadonstart.Enabled = !options_showsplash.Checked;
             options_loadhwonstart.Enabled = !options_showsplash.Checked;
         }
+
+		private void options_retrieveerrors_CheckedChanged(object sender, EventArgs e)
+		{
+			Configuration.OnlyErrorLogs = options_onlyerrors.Checked;
+		}
+
+		private void options_logage_TextChanged(object sender, EventArgs e)
+		{
+			try
+			{
+				int age = Convert.ToInt16(options_logage.Text);
+				Configuration.LogAgeMax = age;
+			}
+			catch (FormatException)
+			{
+				MessageBox.Show("Please enter whole numbers for log age.", "Value not valid", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+			}
+		}
     }
 }

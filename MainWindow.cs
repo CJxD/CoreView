@@ -25,6 +25,7 @@ namespace CoreView
             if (Configuration.LoadWMIAtStart)
             {
                 dataGet = new Thread(new ThreadStart(currentComputer.GetAllInfo));
+				dataGet.IsBackground = true;
                 dataGet.Start();
                 if (Configuration.ShowSplash)
                 {
@@ -34,6 +35,7 @@ namespace CoreView
             else if (Configuration.LoadHardwareAtStart)
             {
                 dataGet = new Thread(new ThreadStart(currentComputer.GetHardwareInfo));
+				dataGet.IsBackground = true;
                 dataGet.Start();
                 while (dataGet.IsAlive)
                 {

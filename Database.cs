@@ -12,6 +12,17 @@ namespace CoreView
     {
         private static SQLiteConnection Connection;
 
+        // Boolean to flag if an abort is requested
+        private static bool abortOperation = false;
+		public static void AbortRetrieval()
+        {
+            abortOperation = true;
+        }
+		public static void ResetAbort()
+        {
+            abortOperation = false;
+        }
+
         public static bool Initialise()
         {
             try
@@ -95,6 +106,7 @@ namespace CoreView
                         + "instance INTEGER NOT NULL,"
                         + "Availability TEXT,"
                         + "Bank TEXT,"
+                        + "Capacity INTEGER,"
                         + "DeviceLocation TEXT,"
                         + "ErrorDescription TEXT,"
                         + "Manufacturer TEXT,"
@@ -111,7 +123,6 @@ namespace CoreView
                         + "Architecture TEXT,"
                         + "Availability TEXT,"
                         + "BitsPerPixel INTEGER,"
-                        + "Colours INTEGER,"
                         + "CurrentClock INTEGER,"
                         + "CurrentRefresh INTEGER,"
                         + "DriverDate TEXT,"
@@ -158,6 +169,7 @@ namespace CoreView
                         + "Name TEXT,"
                         + "Partitions INTEGER,"
                         + "Status TEXT,"
+                        + "Temperature INTEGER,"
                         + "FOREIGN KEY(id) REFERENCES computer(id),"
                         + "PRIMARY KEY(id, instance))";
                     command.ExecuteNonQuery();
@@ -171,7 +183,6 @@ namespace CoreView
                         + "Media Type TEXT,"
                         + "Name TEXT,"
                         + "Status TEXT,"
-                        + "Temperature INTEGER,"
                         + "TransferRate INTEGER,"
                         + "FOREIGN KEY(id) REFERENCES computer(id),"
                         + "PRIMARY KEY(id, instance))";
@@ -272,51 +283,9 @@ namespace CoreView
             }
         }
 
-        public static bool DeleteFromDB(int id)
-        {
-            if (Connection != null)
-            {
-                try
-                {
-                    Connection.Open();
-                    // If the database has been opened, continue
-                    if (Connection.State == ConnectionState.Open)
-                    {
-                        SQLiteCommand command = Connection.CreateCommand();
-
-                        // Deletes a computer from the all tables in the database prior to updating the information
-                        foreach (string classString in ClassList.DatabaseClasses)
-                        {
-                            command.CommandText = "DELETE * FROM " + classString + " WHERE id='" + id + "'";
-                            command.ExecuteNonQuery();
-                        }
-
-                        // End
-                        Connection.Close();
-                        return true;
-                    }
-                    else
-                    {
-                        Connection.Close();
-                        return false;
-                    }
-                }
-                catch (Exception e)
-                {
-                    Connection.Close();
-                    ErrorDialogue errorReporter = new ErrorDialogue(e);
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         public static bool AddToDB(object deviceInstance, string tableName, int id, int instance)
         {
-            if (deviceInstance != null && Connection != null)
+            if (deviceInstance != null && Connection != null && !abortOperation)
             {
                 try
                 {
@@ -373,61 +342,104 @@ namespace CoreView
             }
         }
 
-        // Specific side-function for comments and whatnot
-        public static bool AddCommentsToDB(string comments, int id)
-        {
-            if (Connection != null)
-            {
-                try
-                {
-                    Connection.Open();
-                    // If the database has been opened, continue
-                    if (Connection.State == ConnectionState.Open)
-                    {
-                        SQLiteCommand command = Connection.CreateCommand();
+		// Specific side-function for comments and whatnot
+		public static bool AddCommentsToDB(string comments, int id)
+		{
+            if (Connection != null && !abortOperation)
+			{
+				try
+				{
+					Connection.Open();
+					// If the database has been opened, continue
+					if (Connection.State == ConnectionState.Open)
+					{
+						SQLiteCommand command = Connection.CreateCommand();
 
-                        // First delete any existing elements with the given id
-                        // This makes sure any table updates are correctly handled
-                        command.CommandText = "DELETE FROM comments WHERE id='"
-                                + id
-                                + "'";
-                        command.ExecuteNonQuery();
+						// First delete any existing elements with the given id
+						// This makes sure any table updates are correctly handled
+						command.CommandText = "DELETE FROM comments WHERE id='"
+								+ id
+								+ "'";
+						command.ExecuteNonQuery();
 
-                        // Create a SQL statement to add values
-                        command.CommandText = "INSERT INTO comments VALUES('"
-                                + id
-                                + "','"
-                                + comments;
-                        command.CommandText += "')";
-                        command.ExecuteNonQuery();
+						// Create a SQL statement to add values
+						command.CommandText = "INSERT INTO comments VALUES('"
+								+ id
+								+ "','"
+								+ comments;
+						command.CommandText += "')";
+						command.ExecuteNonQuery();
 
-                        // End
-                        Connection.Close();
-                        return true;
-                    }
-                    else
-                    {
-                        Connection.Close();
-                        return false;
-                    }
-                }
-                catch (Exception e)
-                {
-                    Connection.Close();
-                    ErrorDialogue errorReporter = new ErrorDialogue(e);
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
-            }
-        }
+						// End
+						Connection.Close();
+						return true;
+					}
+					else
+					{
+						Connection.Close();
+						return false;
+					}
+				}
+				catch (Exception e)
+				{
+					Connection.Close();
+					ErrorDialogue errorReporter = new ErrorDialogue(e);
+					return false;
+				}
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		public static bool DeleteFromDB(int id)
+		{
+            if (Connection != null && !abortOperation)
+			{
+				try
+				{
+					Connection.Open();
+					// If the database has been opened, continue
+					if (Connection.State == ConnectionState.Open)
+					{
+						SQLiteCommand command = Connection.CreateCommand();
+
+						// Deletes a computer from the all tables in the database prior to updating the information
+						foreach (string classString in ClassList.DatabaseClasses)
+						{
+                            if (abortOperation) break;
+							command.CommandText = "DELETE FROM " + classString + " WHERE id='" + id + "'";
+							command.ExecuteNonQuery();
+						}
+
+						// End
+						Connection.Close();
+						return true;
+					}
+					else
+					{
+						Connection.Close();
+						return false;
+					}
+				}
+				catch (Exception e)
+				{
+					Connection.Close();
+					ErrorDialogue errorReporter = new ErrorDialogue(e);
+					return false;
+				}
+			}
+			else
+			{
+				return false;
+			}
+		}
 
         public static int[] GetIDNumbers()
         {
             // Gets the ID numbers of all known computers
-            if (Connection != null)
+            if (Connection != null && !abortOperation)
             {
                 List<int> idNumbers = new List<int>();
                 SQLiteCommand command = Connection.CreateCommand();
@@ -458,7 +470,7 @@ namespace CoreView
 
         public static PC GetComputer(int id)
         {
-            if (Connection != null)
+            if (Connection != null && !abortOperation)
             {
                 PC fetched = new PC();
 
@@ -470,6 +482,7 @@ namespace CoreView
                 // Loop through each class and get each row of the table for the specified index
                 foreach (string classString in ClassList.DatabaseClasses)
                 {
+                    if (abortOperation) break;
                     // Open database connection
                     Connection.Open();
 
@@ -484,11 +497,6 @@ namespace CoreView
                             + "'";
                         data = command.ExecuteReader();
 
-                        // Get the appropriate computer field to write to
-                        field = fetched.GetType().GetField(classString);
-                        // Prepare a container by making a new instance of the reffered class
-                        object classContainer = Activator.CreateInstance(Type.GetType("CoreView." + classString));
-
                         // Move data to a DataTable
                         table = new DataTable();
                         table.Load(data);
@@ -497,11 +505,18 @@ namespace CoreView
                         data.Dispose();
                         Connection.Close();
 
+                        // Get the appropriate computer field to write to
+                        field = fetched.GetType().GetField(classString);
+
                         // Iterate through each record and add the data to the class container
                         foreach (DataRow row in table.Rows)
                         {
+                            if (abortOperation) break;
+                            // Prepare container by making a new instance of the reffered class
+                            object classContainer = Activator.CreateInstance(Type.GetType("CoreView." + classString));
                             foreach (DataColumn column in table.Columns)
                             {
+                                if (abortOperation) break;
                                 // Organise the fetched data into an appropriate class container
                                 // Get the field referred to by the current column
                                 classField = classContainer.GetType().GetField(column.ColumnName);
@@ -558,6 +573,7 @@ namespace CoreView
 
             foreach (string classString in ClassList.DatabaseClasses)
             {
+                if (abortOperation) break;
                 // Get each class's element list for both base and target computers
                 currentClass = Type.GetType("CoreView." + classString);
                 currentList = baseComputer.GetType().GetField(classString);
@@ -571,12 +587,15 @@ namespace CoreView
                 // For every field in the object of the element list
                 foreach (FieldInfo field in classFields)
                 {
+                    if (abortOperation) break;
                     // Iterate through each and every object instance in the base/target lists
                     // Find a match between any combination of indexes
                     foreach (object baseObject in baseList)
                     {
+                        if (abortOperation) break;
                         foreach (object targetObject in targetList)
                         {
+                            if (abortOperation) break;
                             // If a match is found, give the target computer a higher score
                             if (field.GetValue(baseObject) == field.GetValue(targetObject))
                             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -29,6 +30,7 @@ namespace CoreView
             populateIRQsTab(null, null);
             populateProcessesTab(null, null);
             populateLogsTab(null, null);
+            populateOverviewTab(null, null);
 
             updater.Enabled = true;
         }
@@ -42,7 +44,7 @@ namespace CoreView
             try
             {
                 // If no items exist and all data wasn't loaded at start up, load it now.
-                if (currentComputer.Processor.Count == 0 && !Configuration.LoadWMIAtStart)
+                if (currentComputer.Processor.Count == 0 && !Configuration.LoadWMIAtStart && sender != null)
                 {
                     Splash.AddProgressInfo("Loading IRQ Information...", 50);
                     currentComputer.GetProcessors();
@@ -87,7 +89,7 @@ namespace CoreView
             try
             {
                 // Motherboard
-                if (currentComputer.Motherboard.Count == 0 && !Configuration.LoadWMIAtStart)
+                if (currentComputer.Motherboard.Count == 0 && !Configuration.LoadWMIAtStart && sender != null)
                 {
                     Splash.AddProgressInfo("Loading Motherboard Information...", 50);
                     currentComputer.GetMotherboards();
@@ -128,16 +130,12 @@ namespace CoreView
             }
         }
 
-        
-        // This is a special case as it doesn't have its own tab
-        // Rather, it uses space in the Motherboard tab
-
         // Memory
         private void populateMemoryTab(object sender, EventArgs e)
         {
             try
             {
-                if (currentComputer.MemoryDevice.Count == 0 && !Configuration.LoadWMIAtStart)
+                if (currentComputer.MemoryDevice.Count == 0 && !Configuration.LoadWMIAtStart && sender != null)
                 {
                     Splash.AddProgressInfo("Loading Memory Information...", 50);
                     currentComputer.GetMemory();
@@ -175,7 +173,7 @@ namespace CoreView
         {
             try
             {
-                if (currentComputer.GraphicsAdapter.Count == 0 && !Configuration.LoadWMIAtStart)
+                if (currentComputer.GraphicsAdapter.Count == 0 && !Configuration.LoadWMIAtStart && sender != null)
                 {
                     Splash.AddProgressInfo("Loading Graphics Information...", 50);
                     currentComputer.GetGraphics();
@@ -213,7 +211,7 @@ namespace CoreView
         {
             try
             {
-                if (currentComputer.NetworkAdapter.Count == 0 && !Configuration.LoadWMIAtStart)
+                if (currentComputer.NetworkAdapter.Count == 0 && !Configuration.LoadWMIAtStart && sender != null)
                 {
                     Splash.AddProgressInfo("Loading Network Information...", 50);
                     currentComputer.GetNetworks();
@@ -251,7 +249,7 @@ namespace CoreView
         {
             try
             {
-                if (currentComputer.HardDrive.Count == 0 && !Configuration.LoadWMIAtStart)
+                if (currentComputer.HardDrive.Count == 0 && !Configuration.LoadWMIAtStart && sender != null)
                 {
                     Splash.AddProgressInfo("Loading Disk Drive Information...", 50);
                     currentComputer.GetHardDrives();
@@ -291,7 +289,7 @@ namespace CoreView
         {
             try
             {
-                if (currentComputer.OpticalDrive.Count == 0 && !Configuration.LoadWMIAtStart)
+                if (currentComputer.OpticalDrive.Count == 0 && !Configuration.LoadWMIAtStart && sender != null)
                 {
                     Splash.AddProgressInfo("Loading Optical Drive Information...", 50);
                     currentComputer.GetOpticalDrives();
@@ -329,7 +327,7 @@ namespace CoreView
         {
             try
             {
-                if (currentComputer.PCICard.Count == 0 && !Configuration.LoadWMIAtStart)
+                if (currentComputer.PCICard.Count == 0 && !Configuration.LoadWMIAtStart && sender != null)
                 {
                     Splash.AddProgressInfo("Loading PCI Information...", 50);
                     currentComputer.GetPCICards();
@@ -367,7 +365,7 @@ namespace CoreView
         {
             try
             {
-                if (currentComputer.USBDevice.Count == 0 && !Configuration.LoadWMIAtStart)
+                if (currentComputer.USBDevice.Count == 0 && !Configuration.LoadWMIAtStart && sender != null)
                 {
                     Splash.AddProgressInfo("Loading USB Info...", 50);
                     currentComputer.GetUSBDevices();
@@ -406,7 +404,7 @@ namespace CoreView
         {
             try
             {
-                if (currentComputer.Driver.Count == 0 && !Configuration.LoadWMIAtStart)
+                if (currentComputer.Driver.Count == 0 && !Configuration.LoadWMIAtStart && sender != null)
                 {
                     Splash.AddProgressInfo("Processing Driver Information...", 50);
                     currentComputer.GetDrivers();
@@ -446,7 +444,7 @@ namespace CoreView
         {
             try
             {
-                if (currentComputer.Software.Count == 0 && !Configuration.LoadWMIAtStart)
+                if (currentComputer.Software.Count == 0 && !Configuration.LoadWMIAtStart && sender != null)
                 {
                     Splash.AddProgressInfo("Processing Software Information...", 50);
                     currentComputer.GetSoftware();
@@ -480,7 +478,7 @@ namespace CoreView
         {
             try
             {
-                if (currentComputer.Address.Count == 0 && !Configuration.LoadWMIAtStart)
+                if (currentComputer.Address.Count == 0 && !Configuration.LoadWMIAtStart && sender != null)
                 {
                     Splash.AddProgressInfo("Processing Address Maps Information...", 50);
                     currentComputer.GetAddresses();
@@ -511,7 +509,7 @@ namespace CoreView
         {
             try
             {
-                if (currentComputer.IRQ.Count == 0 && !Configuration.LoadWMIAtStart)
+                if (currentComputer.IRQ.Count == 0 && !Configuration.LoadWMIAtStart && sender != null)
                 {
                     Splash.AddProgressInfo("Processing IRQ Maps Information...", 50);
                     currentComputer.GetIRQs();
@@ -543,7 +541,7 @@ namespace CoreView
         {
             try
             {
-                if (currentComputer.Conflict.Count == 0 && !Configuration.LoadWMIAtStart)
+                if (currentComputer.Conflict.Count == 0 && !Configuration.LoadWMIAtStart && sender != null)
                 {
                     Splash.AddProgressInfo("Loading Conflicts Information...", 50);
                     currentComputer.GetConflicts();
@@ -582,7 +580,7 @@ namespace CoreView
         {
             try
             {
-                if (currentComputer.Process.Count == 0 && !Configuration.LoadWMIAtStart)
+                if (currentComputer.Process.Count == 0 && !Configuration.LoadWMIAtStart && sender != null)
                 {
                     Splash.AddProgressInfo("Loading Process Information...", 50);
                     currentComputer.GetProcesses();
@@ -618,37 +616,68 @@ namespace CoreView
         {
             try
             {
-                if (currentComputer.Log.Count == 0 && !Configuration.LoadWMIAtStart)
+                if (currentComputer.Log.Count == 0 && !Configuration.LoadWMIAtStart && sender != null)
                 {
                     Splash.AddProgressInfo("Loading Event Log Information...", 50);
                     currentComputer.GetLogs();
                     Splash.AddProgressInfo("Done", 50);
                 }
 
-				logs_quick_1.Text = currentComputer.Log.Count.ToString();
-                logs_details.Items.Clear();
-                foreach (Log log in currentComputer.Log)
-                {
-                    // If the log has a source, include in list
-                    if (log.Source != "")
-                    {
-                        logs_details.Items.Add(new ListViewItem(new string[] {
+				// Only change if number of items has changed
+				if (logs_details.Items.Count != currentComputer.Log.Count)
+				{
+					logs_quick_1.Text = currentComputer.Log.Count.ToString();
+					logs_details.Items.Clear();
+					foreach (Log log in currentComputer.Log)
+					{
+						// If the log has a source, include in list
+						if (log.Source != "")
+						{
+							logs_details.Items.Add(new ListViewItem(new string[] {
                         log.Level,
                         log.DateTime,
                         log.Source,
                         Convert.ToString(log.EventID),
                         log.Message
                     }));
-                    }
-                }
-                logs_details.Columns[logs_details.Columns.Count - 1].Width = -2;
-                // Don't sort. That's crazy.
-                //sortListView(logs_details, 0, true);
+						}
+					}
+					logs_details.Columns[logs_details.Columns.Count - 1].Width = -2;
+					// Don't sort. That's crazy.
+					//sortListView(logs_details, 0, true);
+				}
             }
             catch (Exception)
             {
             }
         }
+
+		// Overview
+		private void populateOverviewTab(object sender, EventArgs e)
+		{
+			try
+			{
+                overview_quick_1.Text = currentComputer.OEMData;
+                overview_quick_2.Text = currentComputer.Name;
+                overview_quick_3.Text = currentComputer.PrimaryOwner;
+                overview_quick_4.Text = currentComputer.NetworkDomain;
+                overview_quick_5.Text = currentComputer.OperatingSystem;
+                overview_quick_6.Text = currentComputer.Architecture;
+
+                if (currentComputer.OEMLogo != null)
+                {
+                    MemoryStream oemLogoStream = new MemoryStream(currentComputer.OEMLogo);
+                    overview_icon.Image = Image.FromStream(oemLogoStream);
+                }
+                else
+                {
+                    overview_icon.Image = Properties.Resources.windows_logo;
+                }
+			}
+			catch (Exception)
+			{
+			}
+		}
 
         // This subroutine is a shortcut that changes the detail-list data on-screen if dropdown selectors are changed
         // It also plays a part in initialisation

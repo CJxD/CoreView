@@ -32,6 +32,7 @@ namespace CoreView
 		public UInt16 ThermalDesignPower = 0;
         public UInt32 Threads = 0;
         public UInt16 Usage = 0;
+        // Further fields can be added here. Simply add a data fetch in GetInfo and add it to the database creation tables.
 
         // Overloaded constructor method
         // The one with no arguments does nothing to initialise the class
@@ -68,10 +69,8 @@ namespace CoreView
                 this.Socket = DataRetriever.GetValue(wmiProcessor, "SocketDesignation");
                 this.Status = DataRetriever.GetValue(wmiProcessor, "Status");
                 this.Stepping = DataRetriever.GetValue(wmiProcessor, "Stepping");
-                //this.Temperature = DataRetriever.GetValueFloat(wmiProcessor, "CurrentVoltage");
                 //this.ThermalDesignPower = DataRetriever.GetValueFloat(wmiProcessor, "CurrentVoltage");
                 this.Threads = DataRetriever.GetValueUInt32(wmiProcessor, "NumberOfLogicalProcessors");
-                //this.Usage = DataRetriever.GetValueUInt16(wmiProcessor, "LoadPercentage");
                 this.GetVolatileInfo();
             }
             catch (Exception e)
@@ -150,7 +149,10 @@ namespace CoreView
             {
                 this.Info = DataRetriever.GetValue(wmiBIOS, "Description");
 				this.SerialID = DataRetriever.GetValue(wmiBIOS, "SerialNumber");
-                this.Version = DataRetriever.GetValue(wmiBIOS, "BIOSVersion");
+                // Get the version as an array of strings
+                string[] versionTemp = DataRetriever.GetValueArray(wmiBIOS, "BIOSVersion");
+                // Join the pieces together for the string variable
+                if (versionTemp != null) this.Version = String.Join(" - ", versionTemp);
             }
             catch (Exception e)
             {

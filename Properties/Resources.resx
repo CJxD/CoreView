@@ -199,4 +199,7 @@
   <data name="lib_sqlite_x86" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\System.Data.SQLite_x86.dll;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="windows_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\windows-logo.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

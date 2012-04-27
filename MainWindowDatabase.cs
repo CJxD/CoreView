@@ -8,6 +8,7 @@ namespace CoreView
 	public partial class MainWindow
 	{
         Thread databaseWorker;
+		bool abortPending = false;
         List<PC> foundComputers = new List<PC>();
         // This temporary list view allows for other threads to edit the database_details ListView
         // The updater worker will put these results into the real thing every second
@@ -35,13 +36,19 @@ namespace CoreView
                 else
                 {
                     Splash.RestartProgress();
+					// If another computer is currently loaded, unload it
+					if (database_load_computer.Text == "Unload Computer")
+					{
+						database_load_computer_Click(null, null);
+					}
                     databaseWorker = new Thread(new ThreadStart(databaseAdd));
+					databaseWorker.IsBackground = true;
                     databaseWorker.Start();
                 }
             }
         }
 
-        private void database_query_start_Click(object sender, System.EventArgs e)
+        private void database_query_start_Click(object sender, EventArgs e)
         {
             // Check whether thread is busy
             if (databaseWorker != null && databaseWorker.IsAlive)
@@ -58,25 +65,37 @@ namespace CoreView
             {
                 Splash.RestartProgress();
                 // Copy columns
-                temporary_database_details.Columns.Clear();
+                temporary_database_details.Clear();
                 foreach (ColumnHeader col in database_details.Columns)
                 {
-                    temporary_database_details.Columns.Add(col);
+                    temporary_database_details.Columns.Add((ColumnHeader)col.Clone());
                 }
                 databaseWorker = new Thread(new ThreadStart(databaseQuery));
+				databaseWorker.IsBackground = true;
                 databaseWorker.Start();
             }
         }
 
-        private void database_query_stop_Click(object sender, System.EventArgs e)
+        private void database_query_stop_Click(object sender, EventArgs e)
         {
-            // Kill if alive
-            if (databaseWorker.IsAlive)
+            Thread abortThread = new Thread(new ThreadStart(abortDatabaseOperation));
+			abortThread.IsBackground = true;
+            abortThread.Start();
+            // Do a final list search
+            sortListView(database_details, 1, false);
+        }
+
+        private void abortDatabaseOperation()
+        {
+            Splash.RestartProgress();
+            Splash.AddProgressInfo("Aborting...", 50);
+			abortPending = true;
+            while(databaseWorker.IsAlive)
             {
-                databaseWorker.Abort();
-                // Do a final list search
-                sortListView(database_details, 1, false);
+                // Do nothing
             }
+			abortPending = false;
+            Splash.AddProgressInfo("Aborted.", 100);
         }
 
         private void database_options_Click(object sender, EventArgs e)
@@ -85,7 +104,7 @@ namespace CoreView
             options.ShowDialog();
         }
 
-        private void database_load_computer_Click(object sender, System.EventArgs e)
+        private void database_load_computer_Click(object sender, EventArgs e)
         {
             // This switch will load/unload the currently selected computer depending on
             // what the current button text is
@@ -96,6 +115,11 @@ namespace CoreView
                 // Load the computer with the id of the currently selected computer
                 currentComputer = Database.GetComputer(Convert.ToInt32(database_details.SelectedItems[0].Text));
 
+                // Refresh listings
+                populateForm();
+                // Disable live updates
+                updater.Enabled = false;
+
                 // Set the new button value
                 database_load_computer.Text = "Unload Computer";
             }
@@ -105,6 +129,11 @@ namespace CoreView
                 currentComputer = storedComputer;
                 // Blank the temporary one
                 storedComputer = new PC();
+
+                // Refresh listings
+                populateForm();
+                // Enable live updates
+                updater.Enabled = true;
 
                 // Set the new button value
                 database_load_computer.Text = "Load Selected Computer";
@@ -124,89 +153,106 @@ namespace CoreView
 
             // First delete any existing elements with the given id
             // This makes sure any table updates are correctly handled
-            //Database.DeleteFromDB(id);
+            Database.DeleteFromDB(id);
 
+			if (abortPending) return;
             Splash.AddProgressInfo("Adding to Database...", 5);
             Database.AddCommentsToDB(currentComputer.Comments, currentComputer.ID);
 
             // For each device instance in device classes
             // This could be done with ClassList.AllClasses, but nah
+			if (abortPending) return;
             Splash.AddProgressInfo("Adding to Database...", 5);
             for (int i = 0; i < currentComputer.Processor.Count; i++)
             {
                 Database.AddToDB(currentComputer.Processor[i], "processor", id, i);
             }
+			if (abortPending) return;
             Splash.AddProgressInfo("Adding to Database...", 5);
             for (int i = 0; i < currentComputer.Motherboard.Count; i++)
             {
                 Database.AddToDB(currentComputer.Motherboard[i], "motherboard", id, i);
             }
+			if (abortPending) return;
             Splash.AddProgressInfo("Adding to Database...", 5);
             for (int i = 0; i < currentComputer.BIOS.Count; i++)
             {
                 Database.AddToDB(currentComputer.BIOS[i], "bios", id, i);
             }
+			if (abortPending) return;
             Splash.AddProgressInfo("Adding to Database...", 5);
             for (int i = 0; i < currentComputer.MemoryDevice.Count; i++)
             {
                 Database.AddToDB(currentComputer.MemoryDevice[i], "memorydevice", id, i);
             }
+			if (abortPending) return;
             Splash.AddProgressInfo("Adding to Database...", 5);
             for (int i = 0; i < currentComputer.GraphicsAdapter.Count; i++)
             {
                 Database.AddToDB(currentComputer.GraphicsAdapter[i], "graphicsadapter", id, i);
             }
+			if (abortPending) return;
             Splash.AddProgressInfo("Adding to Database...", 5);
             for (int i = 0; i < currentComputer.NetworkAdapter.Count; i++)
             {
                 Database.AddToDB(currentComputer.NetworkAdapter[i], "networkadapter", id, i);
             }
+			if (abortPending) return;
             Splash.AddProgressInfo("Adding to Database...", 5);
             for (int i = 0; i < currentComputer.HardDrive.Count; i++)
             {
                 Database.AddToDB(currentComputer.HardDrive[i], "harddrive", id, i);
             }
+			if (abortPending) return;
             Splash.AddProgressInfo("Adding to Database...", 5);
             for (int i = 0; i < currentComputer.OpticalDrive.Count; i++)
             {
                 Database.AddToDB(currentComputer.OpticalDrive[i], "opticaldrive", id, i);
             }
+			if (abortPending) return;
             Splash.AddProgressInfo("Adding to Database...", 5);
             for (int i = 0; i < currentComputer.PCICard.Count; i++)
             {
                 Database.AddToDB(currentComputer.PCICard[i], "pcicard", id, i);
             }
+			if (abortPending) return;
             Splash.AddProgressInfo("Adding to Database...", 5);
             for (int i = 0; i < currentComputer.USBDevice.Count; i++)
             {
                 Database.AddToDB(currentComputer.USBDevice[i], "usbdevice", id, i);
             }
-            Splash.AddProgressInfo("Adding to Database...", 5);
 
+			if (abortPending) return;
+            Splash.AddProgressInfo("Adding to Database...", 5);
             for (int i = 0; i < currentComputer.Driver.Count; i++)
             {
                 Database.AddToDB(currentComputer.Driver[i], "driver", id, i);
             }
+			if (abortPending) return;
             Splash.AddProgressInfo("Adding to Database...", 5);
             for (int i = 0; i < currentComputer.Software.Count; i++)
             {
                 Database.AddToDB(currentComputer.Software[i], "software", id, i);
             }
+			if (abortPending) return;
             Splash.AddProgressInfo("Adding to Database...", 5);
             for (int i = 0; i < currentComputer.Conflict.Count; i++)
             {
                 Database.AddToDB(currentComputer.Conflict[i], "conflict", id, i);
             }
+			if (abortPending) return;
             Splash.AddProgressInfo("Adding to Database...", 5);
             for (int i = 0; i < currentComputer.Process.Count; i++)
             {
                 Database.AddToDB(currentComputer.Process[i], "process", id, i);
             }
+			if (abortPending) return;
             Splash.AddProgressInfo("Adding to Database...", 15);
             for (int i = 0; i < currentComputer.Log.Count; i++)
             {
                 Database.AddToDB(currentComputer.Log[i], "log", id, i);
             }
+
             Splash.AddProgressInfo("Done.", 100);
 
             MessageBox.Show("Computer added to the database.", "Database Entry", MessageBoxButtons.OK, MessageBoxIcon.Information);

@@ -158,11 +158,11 @@ namespace CoreView
 		{
 			try
 			{
-				System.Diagnostics.Process.Start("User Manual.pdf");
+				System.Diagnostics.Process.Start("Manual.pdf");
 			}
 			catch (Exception)
 			{
-				MessageBox.Show("'User Manual.pdf' could not be loaded.", "Help File Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show("'Manual.pdf' could not be loaded.", "Help File Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
 

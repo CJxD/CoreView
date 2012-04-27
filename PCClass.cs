@@ -18,6 +18,14 @@ namespace CoreView
         // Comments about the computer problem
         public string Comments { get; set; }
 
+        public string Architecture = "";
+		public string Name = "";
+		public string NetworkDomain = "";
+		public string OEMData = "";
+		public byte[] OEMLogo;
+        public string OperatingSystem = "";
+		public string PrimaryOwner = "";
+
         public List<Processor> Processor = new List<Processor>();
         public List<Motherboard> Motherboard = new List<Motherboard>();
         public List<BIOS> BIOS = new List<BIOS>();
@@ -37,53 +45,74 @@ namespace CoreView
         public List<Process> Process = new List<Process>();
         public List<Log> Log = new List<Log>();
 
+        // Boolean to flag if an abort is requested
+        private bool abortRetrieval = false;
+        public void AbortRetrieval()
+        {
+            abortRetrieval = true;
+        }
+        public void ResetAbort()
+        {
+            abortRetrieval = false;
+        }
+
         // Methods to get all info sequentially
         public void GetAllInfo()
         {
+			Splash.RestartProgress();
+            Splash.AddProgressInfo("Initialising...", 0);
+            GetGeneral();
             this.GetHardwareInfo();
             this.GetSoftwareInfo();
+            Splash.AddProgressInfo("Done.", 100);
         }
         public void GetHardwareInfo()
         {
             // Complete error catching for information gathering
             try
             {
-                // Set progress to 0%
-                Splash.AddProgressInfo("Initialising...", 0);
-                GetGeneral();
-
                 // Hardware \\
                 // Output what the current task is doing
                 // Add 3% onto progress bar
                 // Each process will increate the percentage by a different amount
                 // depending on how long it usually takes proportionally
+                if (abortRetrieval) return;
                 Splash.AddProgressInfo("Loading Processor Information...", 3);
                 GetProcessors();
 
+                if (abortRetrieval) return;
                 Splash.AddProgressInfo("Loading Motherboard Information...", 2);
                 GetMotherboards();
 
+                if (abortRetrieval) return;
                 Splash.AddProgressInfo("Loading BIOS Information...", 1);
                 GetBIOS();
 
+                if (abortRetrieval) return;
                 Splash.AddProgressInfo("Loading Memory Information...", 2);
                 GetMemory();
 
+                if (abortRetrieval) return;
                 Splash.AddProgressInfo("Loading Graphics Information...", 3);
                 GetGraphics();
 
+                if (abortRetrieval) return;
                 Splash.AddProgressInfo("Loading Network Information...", 4);
                 GetNetworks();
 
+                if (abortRetrieval) return;
                 Splash.AddProgressInfo("Loading Disk Drive Information...", 4);
                 GetHardDrives();
 
+                if (abortRetrieval) return;
                 Splash.AddProgressInfo("Loading Optical Drive Information...", 2);
                 GetOpticalDrives();
 
+                if (abortRetrieval) return;
                 Splash.AddProgressInfo("Loading PCI Information...", 4);
                 GetPCICards();
 
+                if (abortRetrieval) return;
                 Splash.AddProgressInfo("Loading USB Information...", 5);
                 GetUSBDevices();
             }
@@ -99,24 +128,31 @@ namespace CoreView
             // Complete error catching for information gathering
             try
             {
+                if (abortRetrieval) return;
                 Splash.AddProgressInfo("Processing Driver Information...", 6);
                 GetDrivers();
 
+                if (abortRetrieval) return;
                 Splash.AddProgressInfo("Processing Software Information...", 15);
                 GetSoftware();
 
+                if (abortRetrieval) return;
                 Splash.AddProgressInfo("Processing Address Maps...", 18);
                 GetAddresses();
 
+                if (abortRetrieval) return;
                 Splash.AddProgressInfo("Processing IRQ Maps...", 14);
                 GetIRQs();
 
+                if (abortRetrieval) return;
                 Splash.AddProgressInfo("Processing Conflicts...", 3);
                 GetConflicts();
 
+                if (abortRetrieval) return;
                 Splash.AddProgressInfo("Processing Running Processes...", 5);
                 GetProcesses();
 
+                if (abortRetrieval) return;
                 Splash.AddProgressInfo("Processing Windows Logs...", 10);
                 GetLogs();
             }
@@ -419,8 +455,8 @@ namespace CoreView
                 EventDataTemp = new EventLog(eventType, Environment.MachineName);
                 foreach (EventLogEntry log in EventDataTemp.Entries)
                 {
-                    // Only write a log if newer than 1 week old
-                    if (log.TimeGenerated.AddDays(7) >= DateTime.Now)
+                    // Only write a log if newer LogAgeMax
+                    if (log.TimeGenerated.AddDays(Configuration.LogAgeMax) >= DateTime.Now)
                     {
                         // Only write a log if configuration is not specific of event type
                         // Or if the log is an error when the option is set
@@ -443,34 +479,55 @@ namespace CoreView
         public void GetGeneral()
         {
             // General info
-            // Unique ID
-            foreach (NetworkAdapter adapter in NetworkAdapter)
+            ManagementObject[] WMIDataTemp1 = DataRetriever.GetWMIData("Win32_OperatingSystem");
+            this.Architecture = DataRetriever.GetValue(WMIDataTemp1[0], "OSArchitecture");
+            this.Name = DataRetriever.GetValue(WMIDataTemp1[0], "CSName");
+            this.OperatingSystem = DataRetriever.GetValue(WMIDataTemp1[0], "Name");
+            this.OperatingSystem = this.OperatingSystem.Split(new char[] { '¦', '|' })[0];
+
+            WMIDataTemp1 = DataRetriever.GetWMIData("Win32_ComputerSystem");
+            this.NetworkDomain = DataRetriever.GetValue(WMIDataTemp1[0], "Domain");
+            string[] oemTemp = DataRetriever.GetValueArray(WMIDataTemp1[0], "OEMStringArray");
+            if (oemTemp != null) this.OEMData = String.Join(" - ", oemTemp);
+
+            this.OEMLogo = DataRetriever.GetValueBytes(WMIDataTemp1[0], "OEMLogoBitmap");
+            this.PrimaryOwner = DataRetriever.GetValue(WMIDataTemp1[0], "PrimaryOwnerName");
+
+            // Unique ID - composite of processor ID and hard drive serial numbers
+            string id = "";
+            WMIDataTemp1 = DataRetriever.GetWMIData("Win32_Processor");
+            foreach (ManagementObject Object in WMIDataTemp1)
+                id += DataRetriever.GetValue(Object, "ProcessorId");
+
+            WMIDataTemp1 = DataRetriever.GetWMIData("Win32_LogicalDisk");
+            foreach (ManagementObject Object in WMIDataTemp1)
+                id += DataRetriever.GetValue(Object, "VolumeSerialNumber");
+
+            if (id != "")
             {
-                if (adapter.MACAddress != "" && adapter.MACAddress != "N/A")
-                {
-                    // Convert formatted hex to integer
-                    // Start new MD5 hash
-                    MD5 hash = new MD5CryptoServiceProvider();
+                // Convert formatted hex to integer
+                // Start new MD5 hash
+                MD5 hash = new MD5CryptoServiceProvider();
 
-                    // Get an array of bytes from the MACAddress
-                    string hex = adapter.MACAddress.Replace(":", "");
-                    int length = hex.Length;
-                    byte[] bytes = new byte[length / 2];
-                    for (int i = 0; i < length / 2; i++)
-                        bytes[i] = Convert.ToByte(hex.Substring(i, 2), 16);
+                // Get an array of bytes from the hexadecimal string
+                int length = id.Length;
+                byte[] bytes = new byte[length / 2];
+                for (int i = 0; i < length / 2; i++)
+                    bytes[i] = Convert.ToByte(id.Substring(i, 2), 16);
 
-                    // Make MD5
-                    hash.ComputeHash(bytes);
-                    // Turn bytes to string
-                    string output = BitConverter.ToString(hash.Hash);
-                    // Remove slashses
-                    output = output.Replace("-", "");
-                    // Extract first 4 bytes of hash (32 bits)
-                    output = output.Substring(0, 8);
-                    // Convert to 32 bit integer and subtract the MSB with a bitmask - ensures positive only
-                    this.ID = Convert.ToInt32(output, 16) & 0x7FFFFFFF;
-                }
+                // Make MD5
+                hash.ComputeHash(bytes);
+                // Turn bytes to string
+                string output = BitConverter.ToString(hash.Hash);
+                // Remove dashes
+                output = output.Replace("-", "");
+                // Extract first 4 bytes of hash (32 bits)
+                output = output.Substring(0, 8);
+                // Convert to 32 bit integer and subtract the MSB with a bitmask - ensures positive only
+                // Fairly unlikely to get clashes with a 32-bit integer
+                this.ID = Convert.ToInt32(output, 16) & 0x7FFFFFFF;
             }
+
             if (this.ID == 0)
             {
                 // Random fallback
