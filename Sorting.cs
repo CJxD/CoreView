@@ -52,17 +52,17 @@ private static void QuickSortFunction<T>(T[] array, int start, int end, Comparer
         Swap(array, pivot, start);
         pivot = start;
 
-        leftPtr = start + 1;
+        leftPtr = start;
         rightPtr = end;
 
         while (leftPtr < rightPtr)
         {
-            while ((comparer.Compare(array[leftPtr], array[pivot])) <= 0 && (leftPtr < rightPtr))
+            while ((comparer.Compare(array[leftPtr], array[pivot])) < 0 && (leftPtr < rightPtr))
             {
                 leftPtr++;
             }
 
-            while ((comparer.Compare(array[rightPtr], array[pivot])) >= 0 && (leftPtr <= rightPtr))
+            while ((comparer.Compare(array[rightPtr], array[pivot])) >= 0 && (leftPtr < rightPtr))
             {
                 rightPtr--;
             }
