@@ -141,6 +141,64 @@ namespace CoreView
             }
         }
 
+        /// <summary>
+        /// Method to specifically retrieve reference data in the case where 2 classes
+        /// rely on referencing each other to get the full picture
+        /// This uses its own WMI query structure
+        /// Thanks to http://stackoverflow.com/questions/9787892/wmi-hardware-addresses-and-irqs
+        /// Optional scope overload. If no scope specified, then the ManagementSearcher will get references from any namespace.
+        /// </summary>
+        /// <param name="class1">The class to derive the information from</param>
+        /// <param name="class2">The referenced class to find</param>
+        /// <param name="attribute">The attribute from the first class to be associated</param>
+        /// <param name="value">The value of the attribute</param>
+        /// <param name="scope">The scope to look in (optional if looking through any scope)</param>
+        /// <returns>Array of ManagementObjects</returns>
+        public static ManagementObject[] GetWMIReferences(string class1, string class2, string attribute, string value) { return GetWMIAssociates(class1, class2, attribute, value, ""); }
+        public static ManagementObject[] GetWMIReferences(string class1, string class2, string attribute, string value, string scope)
+        {
+            try
+            {
+                // Create a search query
+                string query = "REFERENCES OF {" + class1 + "." + attribute + "='" + value + "'} "
+                    + "WHERE RESULTCLASS = " + class2;
+                ManagementObjectSearcher wmiSearcher;
+                if (scope != "")
+                {
+                    // Scoped search
+                    wmiSearcher = new ManagementObjectSearcher("root\\" + scope, query);
+                }
+                else
+                {
+                    // Unscoped search
+                    wmiSearcher = new ManagementObjectSearcher(query);
+                }
+                ManagementObjectCollection matches = wmiSearcher.Get();
+
+                // Create output array
+                ManagementObject[] matchArray = new ManagementObject[matches.Count];
+
+                // If matches found, copy to output
+                if (matches.Count > 0)
+                {
+                    // Copy the search matches into this array
+                    matches.CopyTo(matchArray, 0);
+                }
+                else
+                {
+                    // Return a single, null element if nothing is found
+                    matchArray = new ManagementObject[1] { null };
+                }
+
+                return matchArray;
+            }
+            catch (Exception e)
+            {
+                ErrorDialogue errorReporter = new ErrorDialogue(e);
+                return null;
+            }
+        }
+
         
         public static Computer ComputerSensors = new Computer();
 		/// <summary>
@@ -219,7 +277,8 @@ namespace CoreView
         // References found at http://msdn.microsoft.com/en-us/library/windows/desktop/aa394512(v=vs.85).aspx
         // And http://msdn.microsoft.com/en-us/library/windows/desktop/aa394512(v=vs.85).aspx
 
-        private static Dictionary<UInt16, string> ArchitectureRef = new Dictionary<UInt16, string> {
+        private static Dictionary<UInt16, string> ArchitectureRef = new Dictionary<UInt16, string>
+        {
             {0, "x86"},
             {1, "MIPS"},
             {2, "Alpha"},
@@ -228,7 +287,8 @@ namespace CoreView
             {9, "x64"}
         };
 
-        private static Dictionary<UInt16, string> AvailabilityRef = new Dictionary<UInt16, string> {
+        private static Dictionary<UInt16, string> AvailabilityRef = new Dictionary<UInt16, string>
+        {
             {1, "Other"},
             {2, "Unknown"},
             {3, "Running on Full Power"},
@@ -248,7 +308,8 @@ namespace CoreView
             {17, "Power Save - Warning"}
         };
 
-		private static Dictionary<UInt16, string> EventTypeRef = new Dictionary<UInt16, string> {
+		private static Dictionary<UInt16, string> EventTypeRef = new Dictionary<UInt16, string>
+        {
             {1, "Error"},
             {2, "Warning"},
             {3, "Information"},
@@ -256,7 +317,8 @@ namespace CoreView
             {5, "Security Audit Failure"},
         };
 
-        private static Dictionary<UInt16, string> FamilyRef = new Dictionary<UInt16, string> {
+        private static Dictionary<UInt16, string> FamilyRef = new Dictionary<UInt16, string>
+        {
             {1, "Other"},
             {2, "Unknown"},
             {3, "8086"},
@@ -367,7 +429,8 @@ namespace CoreView
             {500, "Video Processor"}
         };
 
-        private static Dictionary<UInt16, string> VideoArchitectureRef = new Dictionary<UInt16, string> {
+        private static Dictionary<UInt16, string> VideoArchitectureRef = new Dictionary<UInt16, string>
+        {
             {1, "Other"},
             {2, "Unknown"},
             {3, "CGA"},
@@ -383,7 +446,8 @@ namespace CoreView
             {160, "PC-98"}
         };
 
-        private static Dictionary<UInt16, string> VideoMemoryTypeRef = new Dictionary<UInt16, string> {
+        private static Dictionary<UInt16, string> VideoMemoryTypeRef = new Dictionary<UInt16, string>
+        {
             {1, "Other"},
             {2, "Unknown"},
             {3, "VRAM"},
@@ -397,6 +461,15 @@ namespace CoreView
             {11, "3DRAM"},
             {12, "SDRAM"},
             {160, "SGRAM"}
+        };
+
+        private static Dictionary<UInt16, string> VoltageRef = new Dictionary<UInt16, string>
+        {
+            {0, "Unknown"},
+            {1, "Other"},
+            {2, "3.3v"},
+            {3, "5v"},
+            {4, "12v"}
         };
 
         // Functions to make references to the above dictionaries
@@ -425,6 +498,18 @@ namespace CoreView
 			{
                 return AvailabilityRef[1];
 			}
+        }
+
+        public static string ConvertEventType(UInt16 eventCode)
+        {
+            try
+            {
+                return EventTypeRef[eventCode];
+            }
+            catch
+            {
+                return "N/A";
+            }
         }
 
         public static string ConvertFamily(UInt16 familyCode)
@@ -463,11 +548,11 @@ namespace CoreView
 			}
         }
 
-        public static string ConvertEventType(UInt16 eventCode)
+        public static string ConvertVoltage(UInt16 voltageCode)
         {
             try
             {
-                return EventTypeRef[eventCode];
+                return VoltageRef[voltageCode];
             }
             catch
             {
@@ -492,7 +577,6 @@ namespace CoreView
             catch(Exception e)
             {
                 ErrorDialogue errorReporter = new ErrorDialogue(e);
-                errorReporter.ShowDialog();
                 return "0";
             }
         }
@@ -608,7 +692,7 @@ namespace CoreView
                 return "N/A";
             }
         }
-        // Special case for bytes
+
         public static byte[] GetValueBytes(ManagementObject managementObject, string field)
         {
             try
@@ -622,12 +706,26 @@ namespace CoreView
                 return null;
             }
         }
-        // Special case for string array
+
         public static string[] GetValueArray(ManagementObject managementObject, string field)
         {
             try
             {
                 return (string[])managementObject[field];
+            }
+            catch (Exception e)
+            {
+                ErrorDialogue errorReporter = new ErrorDialogue(e);
+                errorReporter.ShowDialog();
+                return null;
+            }
+        }
+
+        public static UInt16[] GetValueUInt16Array(ManagementObject managementObject, string field)
+        {
+            try
+            {
+                return (UInt16[])managementObject[field];
             }
             catch (Exception e)
             {

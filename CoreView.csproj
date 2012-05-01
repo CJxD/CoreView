@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{7D9EE341-ED95-4294-B6AC-0512EE7884A1}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -71,6 +71,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutDialogue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutDialogue.Designer.cs">
+      <DependentUpon>AboutDialogue.cs</DependentUpon>
+    </Compile>
     <Compile Include="ClassList.cs" />
     <Compile Include="Configuration.cs" />
     <Compile Include="DatabaseAdd.cs">
@@ -78,6 +84,15 @@
     </Compile>
     <Compile Include="DatabaseAdd.Designer.cs">
       <DependentUpon>DatabaseAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LicenceDialogue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LicenceDialogue.Designer.cs">
+      <DependentUpon>LicenceDialogue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindowMisc.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainWindowSorting.cs">
       <SubType>Form</SubType>
@@ -126,6 +141,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AboutDialogue.resx">
+      <DependentUpon>AboutDialogue.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DatabaseAdd.resx">
       <DependentUpon>DatabaseAdd.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -133,6 +151,9 @@
     <EmbeddedResource Include="ErrorDialogue.resx">
       <DependentUpon>ErrorDialogue.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LicenceDialogue.resx">
+      <DependentUpon>LicenceDialogue.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
@@ -178,7 +199,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Logo.ico" />
-    <Content Include="Resources\167.png" />
+    <None Include="Resources\Manual.pdf" />
+    <None Include="Resources\Text Logo.png" />
+    <None Include="Resources\Error.png" />
     <None Include="Resources\windows-logo.png" />
     <None Include="Resources\System.Data.SQLite_x64.dll" />
     <None Include="Resources\System.Data.SQLite_x86.dll" />

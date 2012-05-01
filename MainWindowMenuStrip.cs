@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
+using System.IO;
 
 namespace CoreView
 {
@@ -144,6 +145,10 @@ namespace CoreView
             // Abort first, then refresh
             Thread abortThread = new Thread(new ThreadStart(abortDataRetreival));
             abortThread.Start();
+            while (abortThread.IsAlive)
+            {
+                // Do nothing
+            }
             dataGet = new Thread(new ThreadStart(currentComputer.RefreshAll));
             dataGet.Start();
 		}
@@ -158,6 +163,10 @@ namespace CoreView
 		{
 			try
 			{
+                if (!File.Exists("Manual.pdf"))
+                {
+                    File.WriteAllBytes("Manual.pdf", Properties.Resources.Manual);
+                }
 				System.Diagnostics.Process.Start("Manual.pdf");
 			}
 			catch (Exception)
@@ -168,12 +177,14 @@ namespace CoreView
 
 		private void licensingToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-
+            LicenceDialogue licence = new LicenceDialogue();
+            licence.ShowDialog();
 		}
 
 		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-
+            AboutDialogue about = new AboutDialogue();
+            about.ShowDialog();
 		}
 	}
 }

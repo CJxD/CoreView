@@ -60,10 +60,10 @@
             // 
             // error_icon
             // 
-            this.error_icon.Image = global::CoreView.Properties.Resources.Error;
-            this.error_icon.Location = new System.Drawing.Point(6, 6);
+            this.error_icon.Image = ((System.Drawing.Image)(resources.GetObject("error_icon.Image")));
+            this.error_icon.Location = new System.Drawing.Point(12, 9);
             this.error_icon.Name = "error_icon";
-            this.error_icon.Size = new System.Drawing.Size(64, 64);
+            this.error_icon.Size = new System.Drawing.Size(48, 48);
             this.error_icon.TabIndex = 2;
             this.error_icon.TabStop = false;
             // 
@@ -71,16 +71,16 @@
             // 
             this.error_label.AutoSize = true;
             this.error_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.error_label.Location = new System.Drawing.Point(65, 9);
+            this.error_label.Location = new System.Drawing.Point(60, 10);
             this.error_label.Name = "error_label";
-            this.error_label.Size = new System.Drawing.Size(226, 13);
+            this.error_label.Size = new System.Drawing.Size(187, 13);
             this.error_label.TabIndex = 3;
-            this.error_label.Text = "Diagnostic Utility encountered an error";
+            this.error_label.Text = "Core View encountered an error";
             // 
             // error_advice
             // 
             this.error_advice.AutoSize = true;
-            this.error_advice.Location = new System.Drawing.Point(73, 25);
+            this.error_advice.Location = new System.Drawing.Point(68, 26);
             this.error_advice.Name = "error_advice";
             this.error_advice.Size = new System.Drawing.Size(227, 13);
             this.error_advice.TabIndex = 5;

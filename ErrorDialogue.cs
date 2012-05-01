@@ -12,7 +12,8 @@ namespace CoreView
 			// Cases for small exceptions
             // If the exception is a Management exception, the text is access denied, and the error hasn't already been shown,
             // show the error.
-            if (e is System.Management.ManagementException && e.Message == "Access denied ")
+            // Also show this error if there is a registry access failure
+            if (e is System.Management.ManagementException && e.Message == "Access denied " || e is System.Security.SecurityException)
 			{
                 if (!Configuration.PermissionErrorDisplayed)
                 {
@@ -58,6 +59,16 @@ namespace CoreView
                     Configuration.DatabaseErrorDisplayed = true;
                 }
             }
+			else if (e is System.IO.IOException || e is UnauthorizedAccessException)
+			{
+				MessageBox.Show("An error occurred when writing the configuration file."
+					+ Environment.NewLine
+					+ "Please check that it is not in use or on a write-protected medium.",
+					"Configuration Failure",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Error
+				);
+			}
             // Other exceptions display a bigger error
 			else
 			{

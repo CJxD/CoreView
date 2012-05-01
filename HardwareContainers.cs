@@ -531,24 +531,31 @@ namespace CoreView
 		public string Slot = "N/A";
         public string Status = "N/A";
 		public string Tag = "N/A";
-        public string Usage = "N/A";
+        public string VccVoltageModes = "N/A";
 
         public PCICard() { }
-        public PCICard(ManagementObject wmiSystemSlot)
+        public PCICard(ManagementObject wmiSystemSlot, ManagementObject wmiPNPEntity)
         {
-            this.GetInfo(wmiSystemSlot);
+            this.GetInfo(wmiSystemSlot, wmiPNPEntity);
         }
 
-        public void GetInfo(ManagementObject wmiSystemSlot)
+        public void GetInfo(ManagementObject wmiSystemSlot, ManagementObject wmiPNPEntity)
         {
             try
             {
                 this.Manufacturer = DataRetriever.GetValue(wmiSystemSlot, "Manufacturer");
-                this.Model = DataRetriever.GetValue(wmiSystemSlot, "Model");
+                this.Model = DataRetriever.GetValue(wmiSystemSlot, "Name");
 				this.Slot = DataRetriever.GetValue(wmiSystemSlot, "SlotDesignation");
                 this.Status = DataRetriever.GetValue(wmiSystemSlot, "Status");
 				this.Tag = DataRetriever.GetValue(wmiSystemSlot, "Tag");
-                //this.Usage = DataRetriever.GetValue(wmiSystemSlot, "Usage");
+                // Voltage conversion
+                UInt16[] voltages = DataRetriever.GetValueUInt16Array(wmiSystemSlot, "VccMixedVoltageSupport");
+                string[] voltageStrings = new string[voltages.Length];
+                for (int i = 0; i < voltages.Length - 1; i++)
+                {
+                    voltageStrings[i] = DataRetriever.ConvertVoltage(Convert.ToUInt16(voltages[i]));
+                }
+                this.VccVoltageModes = String.Join(", ", voltageStrings);
             }
             catch (Exception e)
             {

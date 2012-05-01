@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Management;
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 
 namespace CoreView
 {
@@ -25,6 +26,8 @@ namespace CoreView
 		public byte[] OEMLogo;
         public string OperatingSystem = "";
 		public string PrimaryOwner = "";
+        public DateTime ShutdownDate = new DateTime();
+        public string ShutdownReason = "";
 
         public List<Processor> Processor = new List<Processor>();
         public List<Motherboard> Motherboard = new List<Motherboard>();
@@ -286,9 +289,12 @@ namespace CoreView
             ManagementObject[] WMIDataTemp1 = DataRetriever.GetWMIData("Win32_SystemSlot");
             foreach (ManagementObject Object in WMIDataTemp1)
             {
-                this.PCICard.Add(new PCICard(Object));
+                //ManagementObject[] WMIDataTemp2 = DataRetriever.GetWMIData("Win32_SystemSlot");
+                //if (Object["DeviceID"].ToString().Substring(0, 3) == "PCI")
+                //{
+                    this.PCICard.Add(new PCICard(Object, null));
+                //}
             }
-
         }
 
         public void GetUSBDevices()
@@ -296,7 +302,7 @@ namespace CoreView
             ManagementObject[] WMIDataTemp1 = DataRetriever.GetWMIData("Win32_USBControllerDevice");
             foreach (ManagementObject Object in WMIDataTemp1)
             {
-                // There is more data in Win32_PnPEntity, so data is being pulled from that
+                // There is more data in Win32_PnPEntity, so data is being pulled from that too
                 ManagementObject WMIDataTemp2 = DataRetriever.GetPnPEntity(Object["Dependent"].ToString());
                 this.USBDevice.Add(new USBDevice(WMIDataTemp2));
             }
@@ -456,7 +462,7 @@ namespace CoreView
                 foreach (EventLogEntry log in EventDataTemp.Entries)
                 {
                     // Only write a log if newer LogAgeMax
-                    if (log.TimeGenerated.AddDays(Configuration.LogAgeMax) >= DateTime.Now)
+                    if (log.TimeGenerated.AddDays(Configuration.LogAgeMax) >= DateTime.Now || Configuration.LogAgeMax == 0)
                     {
                         // Only write a log if configuration is not specific of event type
                         // Or if the log is an error when the option is set
@@ -472,8 +478,23 @@ namespace CoreView
                             this.Log.Add(new Log(log));
                         }
                     }
+
+                    // Get the reason for last shutdown (event code 1074 or 6008)
+                    // This will be rerecorded each time one of these IDs are found, but only the latest one will be kept
+                    if (log.EventID == 1074 || log.EventID == 6008)
+                    {
+                        this.ShutdownDate = log.TimeGenerated;
+                        this.ShutdownReason = log.Message;
+                    }
                 }
             }
+
+            // Replace full shutdown reason message with the pure reason only using regular expressions
+            Match match = Regex.Match(this.ShutdownReason, @"(unexpected)|reason: ([\w|(|)| ]+)", RegexOptions.IgnoreCase);
+            this.ShutdownReason = match.Groups[1].Value + match.Groups[2].Value;
+
+            // Replace 'No title for this reason could be found' with 'unexplained'
+            if (this.ShutdownReason == "No title for this reason could be found") this.ShutdownReason = "unexplained";
         }
 
         public void GetGeneral()

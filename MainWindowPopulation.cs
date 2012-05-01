@@ -623,10 +623,25 @@ namespace CoreView
                     Splash.AddProgressInfo("Done", 50);
                 }
 
+                // Count
+                logs_quick_1.Text = currentComputer.Log.Count.ToString();
+                // Date, time and reason of last shutdown
+                if (currentComputer.ShutdownReason != "")
+                {
+                    logs_quick_2.Text = currentComputer.ShutdownDate.ToShortDateString()
+                        + " "
+                        + currentComputer.ShutdownDate.ToShortTimeString();
+                    logs_quick_3.Text = currentComputer.ShutdownReason;
+                }
+                else
+                {
+                    logs_quick_2.Text = "No information available";
+                    logs_quick_3.Text = "";
+                }
+
 				// Only change if number of items has changed
 				if (logs_details.Items.Count != currentComputer.Log.Count)
 				{
-					logs_quick_1.Text = currentComputer.Log.Count.ToString();
 					logs_details.Items.Clear();
 					foreach (Log log in currentComputer.Log)
 					{
@@ -643,8 +658,8 @@ namespace CoreView
 						}
 					}
 					logs_details.Columns[logs_details.Columns.Count - 1].Width = -2;
-					// Don't sort. That's crazy.
-					//sortListView(logs_details, 0, true);
+					// This could be problematic...
+					//sortListView(logs_details, 1, true);
 				}
             }
             catch (Exception)

@@ -38,6 +38,7 @@
       <weight name="ProductID">0.4</weight>
       <weight name="SerialID">0.1</weight>
       <weight name="Status">0.7</weight>
+      <weight name="Temperature">0.3</weight>
     </Motherboard>
     <BIOS>
       <weight name="Info">0.3</weight>
@@ -59,7 +60,7 @@
       <weight name="Architecture">0.3</weight>
       <weight name="Availability">0.7</weight>
       <weight name="BitsPerPixel">0.2</weight>
-      <weight name="Colours">0.3</weight>
+      <weight name="CurrentClock">0.3</weight>
       <weight name="CurrentRefresh">0.6</weight>
       <weight name="DriverDate">0.8</weight>
       <weight name="DriverVersion">0.8</weight>
@@ -71,6 +72,7 @@
       <weight name="MinRefresh">0.5</weight>
       <weight name="Name">0.7</weight>
       <weight name="Status">0.7</weight>
+      <weight name="Temperature">0.3</weight>
       <weight name="VerticalResolution">0.6</weight>
     </GraphicsAdapter>
     <NetworkAdapter>
@@ -94,6 +96,7 @@
       <weight name="Model">0.7</weight>
       <weight name="Partitions">0.3</weight>
       <weight name="Status">0.7</weight>
+      <weight name="Temperature">0.3</weight>
     </HardDrive>
     <OpticalDrive>
       <weight name="Availability">0.7</weight>
@@ -148,10 +151,180 @@
     <Log>
       <weight name="Category">0.3</weight>
       <weight name="DateTime">0.1</weight>
-      <weight name="ID">0.1</weight>
+      <weight name="EventID">0.3</weight>
       <weight name="Level">0.5</weight>
       <weight name="Message">0.7</weight>
       <weight name="Source">0.8</weight>
     </Log>
+    <ComplaintBSOD>
+      <weight name="Processor">0.3</weight>
+      <weight name="Motherboard">0.3</weight>
+      <weight name="BIOS">0.3</weight>
+      <weight name="MemoryDevice">0.3</weight>
+      <weight name="GraphicsAdapter">0.3</weight>
+      <weight name="NetworkAdapter">0.3</weight>
+      <weight name="HardDrive">0.3</weight>
+      <weight name="OpticalDrive">0.3</weight>
+      <weight name="PCICard">0.3</weight>
+      <weight name="USBDevice">0.3</weight>
+      <weight name="Driver">0.3</weight>
+      <weight name="Software">0.3</weight>
+      <weight name="Conflict">0.3</weight>
+      <weight name="Process">0.3</weight>
+      <weight name="Log">0.3</weight>
+    </ComplaintBSOD>
+    <ComplaintDeviceIssue>
+      <weight name="Processor">0.3</weight>
+      <weight name="Motherboard">0.3</weight>
+      <weight name="BIOS">0.3</weight>
+      <weight name="MemoryDevice">0.3</weight>
+      <weight name="GraphicsAdapter">0.3</weight>
+      <weight name="NetworkAdapter">0.3</weight>
+      <weight name="HardDrive">0.3</weight>
+      <weight name="OpticalDrive">0.3</weight>
+      <weight name="PCICard">0.3</weight>
+      <weight name="USBDevice">0.3</weight>
+      <weight name="Driver">0.3</weight>
+      <weight name="Software">0.3</weight>
+      <weight name="Conflict">0.3</weight>
+      <weight name="Process">0.3</weight>
+      <weight name="Log">0.3</weight>
+    </ComplaintDeviceIssue>
+    <ComplaintDisplayIssue>
+      <weight name="Processor">0.3</weight>
+      <weight name="Motherboard">0.3</weight>
+      <weight name="BIOS">0.3</weight>
+      <weight name="MemoryDevice">0.3</weight>
+      <weight name="GraphicsAdapter">0.3</weight>
+      <weight name="NetworkAdapter">0.3</weight>
+      <weight name="HardDrive">0.3</weight>
+      <weight name="OpticalDrive">0.3</weight>
+      <weight name="PCICard">0.3</weight>
+      <weight name="USBDevice">0.3</weight>
+      <weight name="Driver">0.3</weight>
+      <weight name="Software">0.3</weight>
+      <weight name="Conflict">0.3</weight>
+      <weight name="Process">0.3</weight>
+      <weight name="Log">0.3</weight>
+    </ComplaintDisplayIssue>
+    <ComplaintInputIssue>
+      <weight name="Processor">0.3</weight>
+      <weight name="Motherboard">0.3</weight>
+      <weight name="BIOS">0.3</weight>
+      <weight name="MemoryDevice">0.3</weight>
+      <weight name="GraphicsAdapter">0.3</weight>
+      <weight name="NetworkAdapter">0.3</weight>
+      <weight name="HardDrive">0.3</weight>
+      <weight name="OpticalDrive">0.3</weight>
+      <weight name="PCICard">0.3</weight>
+      <weight name="USBDevice">0.3</weight>
+      <weight name="Driver">0.3</weight>
+      <weight name="Software">0.3</weight>
+      <weight name="Conflict">0.3</weight>
+      <weight name="Process">0.3</weight>
+      <weight name="Log">0.3</weight>
+    </ComplaintInputIssue>
+    <ComplaintLockouts>
+      <weight name="Processor">0.3</weight>
+      <weight name="Motherboard">0.3</weight>
+      <weight name="BIOS">0.3</weight>
+      <weight name="MemoryDevice">0.3</weight>
+      <weight name="GraphicsAdapter">0.3</weight>
+      <weight name="NetworkAdapter">0.3</weight>
+      <weight name="HardDrive">0.3</weight>
+      <weight name="OpticalDrive">0.3</weight>
+      <weight name="PCICard">0.3</weight>
+      <weight name="USBDevice">0.3</weight>
+      <weight name="Driver">0.3</weight>
+      <weight name="Software">0.3</weight>
+      <weight name="Conflict">0.3</weight>
+      <weight name="Process">0.3</weight>
+      <weight name="Log">0.3</weight>
+    </ComplaintLockouts>
+    <ComplaintProgramIssue>
+      <weight name="Processor">0.3</weight>
+      <weight name="Motherboard">0.3</weight>
+      <weight name="BIOS">0.3</weight>
+      <weight name="MemoryDevice">0.3</weight>
+      <weight name="GraphicsAdapter">0.3</weight>
+      <weight name="NetworkAdapter">0.3</weight>
+      <weight name="HardDrive">0.3</weight>
+      <weight name="OpticalDrive">0.3</weight>
+      <weight name="PCICard">0.3</weight>
+      <weight name="USBDevice">0.3</weight>
+      <weight name="Driver">0.3</weight>
+      <weight name="Software">0.3</weight>
+      <weight name="Conflict">0.3</weight>
+      <weight name="Process">0.3</weight>
+      <weight name="Log">0.3</weight>
+    </ComplaintProgramIssue>
+    <ComplaintScreenLag>
+      <weight name="Processor">0.3</weight>
+      <weight name="Motherboard">0.3</weight>
+      <weight name="BIOS">0.3</weight>
+      <weight name="MemoryDevice">0.3</weight>
+      <weight name="GraphicsAdapter">0.3</weight>
+      <weight name="NetworkAdapter">0.3</weight>
+      <weight name="HardDrive">0.3</weight>
+      <weight name="OpticalDrive">0.3</weight>
+      <weight name="PCICard">0.3</weight>
+      <weight name="USBDevice">0.3</weight>
+      <weight name="Driver">0.3</weight>
+      <weight name="Software">0.3</weight>
+      <weight name="Conflict">0.3</weight>
+      <weight name="Process">0.3</weight>
+      <weight name="Log">0.3</weight>
+    </ComplaintScreenLag>
+    <ComplaintSlowBoot>
+      <weight name="Processor">0.3</weight>
+      <weight name="Motherboard">0.3</weight>
+      <weight name="BIOS">0.3</weight>
+      <weight name="MemoryDevice">0.3</weight>
+      <weight name="GraphicsAdapter">0.3</weight>
+      <weight name="NetworkAdapter">0.3</weight>
+      <weight name="HardDrive">0.3</weight>
+      <weight name="OpticalDrive">0.3</weight>
+      <weight name="PCICard">0.3</weight>
+      <weight name="USBDevice">0.3</weight>
+      <weight name="Driver">0.3</weight>
+      <weight name="Software">0.3</weight>
+      <weight name="Conflict">0.3</weight>
+      <weight name="Process">0.3</weight>
+      <weight name="Log">0.3</weight>
+    </ComplaintSlowBoot>
+    <ComplaintSluggish>
+      <weight name="Processor">0.3</weight>
+      <weight name="Motherboard">0.3</weight>
+      <weight name="BIOS">0.3</weight>
+      <weight name="MemoryDevice">0.3</weight>
+      <weight name="GraphicsAdapter">0.3</weight>
+      <weight name="NetworkAdapter">0.3</weight>
+      <weight name="HardDrive">0.3</weight>
+      <weight name="OpticalDrive">0.3</weight>
+      <weight name="PCICard">0.3</weight>
+      <weight name="USBDevice">0.3</weight>
+      <weight name="Driver">0.3</weight>
+      <weight name="Software">0.3</weight>
+      <weight name="Conflict">0.3</weight>
+      <weight name="Process">0.3</weight>
+      <weight name="Log">0.3</weight>
+    </ComplaintSluggish>
+    <ComplaintSoundIssue>
+      <weight name="Processor">0.3</weight>
+      <weight name="Motherboard">0.3</weight>
+      <weight name="BIOS">0.3</weight>
+      <weight name="MemoryDevice">0.3</weight>
+      <weight name="GraphicsAdapter">0.3</weight>
+      <weight name="NetworkAdapter">0.3</weight>
+      <weight name="HardDrive">0.3</weight>
+      <weight name="OpticalDrive">0.3</weight>
+      <weight name="PCICard">0.3</weight>
+      <weight name="USBDevice">0.3</weight>
+      <weight name="Driver">0.3</weight>
+      <weight name="Software">0.3</weight>
+      <weight name="Conflict">0.3</weight>
+      <weight name="Process">0.3</weight>
+      <weight name="Log">0.3</weight>
+    </ComplaintSoundIssue>
   </standardweights>
 </configuration>

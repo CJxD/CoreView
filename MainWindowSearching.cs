@@ -35,6 +35,11 @@ namespace CoreView
                     i = haystack.Items.Count;
                 }
             } while (i < haystack.Items.Count);
+            // If nothing found, show message
+            if (haystack.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Value could not be found.", "Search", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void drivers_search_btn_Click(object sender, EventArgs e)

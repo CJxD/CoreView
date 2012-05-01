@@ -196,7 +196,7 @@ namespace CoreView
                         + "Slot TEXT,"
                         + "Status TEXT,"
                         + "Tag TEXT,"
-                        + "Usage TEXT,"
+                        + "VccVoltageModes TEXT,"
                         + "FOREIGN KEY(id) REFERENCES computer(id),"
                         + "PRIMARY KEY(id, instance))";
                     command.ExecuteNonQuery();
@@ -441,26 +441,35 @@ namespace CoreView
             // Gets the ID numbers of all known computers
             if (Connection != null && !abortOperation)
             {
-                List<int> idNumbers = new List<int>();
-                SQLiteCommand command = Connection.CreateCommand();
-                SQLiteDataReader data;
-
-                // Get all IDs from one of the tables. Comments is best as IDs are unique to the rows.
-                Connection.Open();
-                command.CommandText = "SELECT id FROM comments";
-                data = command.ExecuteReader();
-
-                // For each record
-                while (data.Read())
+                try
                 {
-                    // Add the id field to the id numbers list
-                    idNumbers.Add(Convert.ToInt32(data[0]));
+                    List<int> idNumbers = new List<int>();
+                    SQLiteCommand command = Connection.CreateCommand();
+                    SQLiteDataReader data;
+
+                    // Get all IDs from one of the tables. Comments is best as IDs are unique to the rows.
+                    Connection.Open();
+                    command.CommandText = "SELECT id FROM comments";
+                    data = command.ExecuteReader();
+
+                    // For each record
+                    while (data.Read())
+                    {
+                        // Add the id field to the id numbers list
+                        idNumbers.Add(Convert.ToInt32(data[0]));
+                    }
+
+                    Connection.Close();
+
+                    // Set the list of ids as an array of integers
+                    return idNumbers.ToArray();
                 }
-
-                Connection.Close();
-
-                // Set the list of ids as an array of integers
-                return idNumbers.ToArray();
+                catch (Exception e)
+                {
+                    Connection.Close();
+                    ErrorDialogue errorReporter = new ErrorDialogue(e);
+                    return null;
+                }
             }
             else
             {

@@ -124,12 +124,12 @@ namespace CoreView
 		{
 			try
 			{
-				int age = Convert.ToInt16(options_logage.Text);
+				uint age = Convert.ToUInt16(options_logage.Text);
 				Configuration.LogAgeMax = age;
 			}
 			catch (FormatException)
 			{
-				MessageBox.Show("Please enter whole numbers for log age.", "Value not valid", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				MessageBox.Show("Please enter positive whole numbers for log age. Use the value 0 for no time limit.", "Value not valid", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 			}
 		}
     }

@@ -1,14 +1,16 @@
 == To Do ==
-PCI errors fix
 PCI Entity data
 Stop Search report progress
-Fix loading bar stuck near end
 Double-sort reverse order
 QuickSort excessive stack usage
-QuickSort errors
 Make all public fields in data containers into public properties
-Weights config bug
-Quick-info hover expand
+CPU Usage and IO Usage in processes
+Use C# integrated sorting functions
+Speed up database writes
+Suppress information logs rather that show only error logs
+SMART data improvements (icons)
+Error log icons
+Store general information in database too
 
 == Changes (0.8.0.2) ==
 BIOS Version data fixed
@@ -21,3 +23,11 @@ Database operation aborting enhancements
 
 == Changes (0.8.0.3) ==
 Fixed threads continuing to execute after shutdown
+Added tooltips to quick-info to reveal clipped text
+Added licensing and about dialogues
+Added user manual
+Fixed Quicksort errors
+Fixed blank unhandled exception boxes
+Reason for last shutdown added
+
+== Changes (0.8.0.4) ==

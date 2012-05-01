@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace CoreView
 {
 	public static class Sorting
 	{
+        private static Random random = new Random();
+
         /// <summary>
         /// Quick sort interface. 
         /// </summary>
@@ -39,53 +42,44 @@ namespace CoreView
             }
 		}
 
-        private static void QuickSortFunction<T>(T[] array, int start, int end, Comparer<T> comparer)
+private static void QuickSortFunction<T>(T[] array, int start, int end, Comparer<T> comparer)
+{
+    if (end - start >= 1)
+    {
+        int leftPtr, rightPtr, pivot;
+        Random random = new Random();
+        pivot = random.Next(start, end);
+        Swap(array, pivot, start);
+        pivot = start;
+
+        leftPtr = start + 1;
+        rightPtr = end;
+
+        while (leftPtr < rightPtr)
         {
-            // If the partition is of size 1 or less, ignore
-            if (end - start > 1)
+            while ((comparer.Compare(array[leftPtr], array[pivot])) <= 0 && (leftPtr < rightPtr))
             {
-                int leftPtr, rightPtr, pivot;
-                // The median is a good choice of pivot
-                pivot = (start + end) / 2;
-                // Move pivot to the start
-                Swap(array, pivot, start);
-                pivot = start;
+                leftPtr++;
+            }
 
-                // Set left and right pointers to the limits of the array (minus the pivot value, of course)
-                leftPtr = start + 1;
-                rightPtr = end;
+            while ((comparer.Compare(array[rightPtr], array[pivot])) >= 0 && (leftPtr <= rightPtr))
+            {
+                rightPtr--;
+            }
 
-                // Search left and right of the pivot for higher/lower values and swap them
-                // Stop when the pointers meet
-                while (leftPtr < rightPtr)
-                {
-                    // Repeat until the leftPtr points to an element larger than the pivot, keep increasing until the pointers meet
-                    while ((comparer.Compare(array[leftPtr], array[pivot])) <= 0 && (leftPtr < rightPtr))
-                    {
-                        leftPtr++;
-                    }
-
-                    while ((comparer.Compare(array[rightPtr], array[pivot])) >= 0 && (leftPtr <= rightPtr))
-                    {
-                        rightPtr--;
-                    }
-
-                    // Higher values should be to the right of the pivot and vice versa
-                    // If the leftPtr is still lower than the rightPtr, they must be swapped
-                    if (leftPtr < rightPtr)
-                    {
-                        Swap(array, leftPtr, rightPtr);
-                    }
-                }
-                // Put pivot back in the right place (swap with the rightPtr, as its value is lower)
-                Swap(array, pivot, rightPtr);
-                pivot = rightPtr;
-
-                // Sort the two partitions
-                QuickSortFunction(array, start, pivot - 1, comparer);
-                QuickSortFunction(array, pivot + 1, end, comparer);
+            if (leftPtr < rightPtr)
+            {
+                Swap(array, leftPtr, rightPtr);
             }
         }
+        Swap(array, pivot, rightPtr);
+        pivot = rightPtr;
+
+        QuickSortFunction(array, start, pivot - 1, comparer);
+        QuickSortFunction(array, pivot + 1, end, comparer);
+    }
+}
+
 
         private static void Swap<T>(T[] array, int pointer1, int pointer2)
         {
