@@ -32,3 +32,8 @@ Fixed blank unhandled exception boxes
 Reason for last shutdown added
 
 == Changes (0.8.0.4) ==
+Added dirty flag status to system drive
+
+== Changes (0.8.0.5) ==
+Fixed a bug that causes the program to close at startup - ideally needs more attention to see which exception is thrown
+Added default weightings for complaints
