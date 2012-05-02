@@ -516,7 +516,16 @@ namespace CoreView
             this.PrimaryOwner = DataRetriever.GetValue(WMIDataTemp1[0], "PrimaryOwnerName");
 
             WMIDataTemp1 = DataRetriever.GetWMIData("Win32_Volume", "SystemVolume = True");
-            this.DirtyFlag = DataRetriever.GetValueBool(WMIDataTemp1[0], "DirtyBitSet");
+            try
+            {
+                this.DirtyFlag = DataRetriever.GetValueBool(WMIDataTemp1[0], "DirtyBitSet");
+            }
+            catch
+            {
+                // If the DirtyFlag could not be properly converted, return false
+                // Still need to find out what's really going on here.
+                this.DirtyFlag = false;
+            }
 
             // Unique ID - composite of processor ID and hard drive serial numbers
             string id = "";
