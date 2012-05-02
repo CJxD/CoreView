@@ -42,43 +42,43 @@ namespace CoreView
             }
 		}
 
-private static void QuickSortFunction<T>(T[] array, int start, int end, Comparer<T> comparer)
-{
-    if (end - start >= 1)
-    {
-        int leftPtr, rightPtr, pivot;
-        Random random = new Random();
-        pivot = random.Next(start, end);
-        Swap(array, pivot, start);
-        pivot = start;
-
-        leftPtr = start;
-        rightPtr = end;
-
-        while (leftPtr < rightPtr)
+        private static void QuickSortFunction<T>(T[] array, int start, int end, Comparer<T> comparer)
         {
-            while ((comparer.Compare(array[leftPtr], array[pivot])) < 0 && (leftPtr < rightPtr))
+            if (end - start >= 1)
             {
-                leftPtr++;
-            }
+                int leftPtr, rightPtr, pivot;
+                Random random = new Random();
+                pivot = random.Next(start, end);
+                Swap(array, pivot, start);
+                pivot = start;
 
-            while ((comparer.Compare(array[rightPtr], array[pivot])) >= 0 && (leftPtr < rightPtr))
-            {
-                rightPtr--;
-            }
+                leftPtr = start;
+                rightPtr = end;
 
-            if (leftPtr < rightPtr)
-            {
-                Swap(array, leftPtr, rightPtr);
+                while (leftPtr < rightPtr)
+                {
+                    while ((comparer.Compare(array[leftPtr], array[pivot])) < 0 && (leftPtr < rightPtr))
+                    {
+                        leftPtr++;
+                    }
+
+                    while ((comparer.Compare(array[rightPtr], array[pivot])) >= 0 && (leftPtr < rightPtr))
+                    {
+                        rightPtr--;
+                    }
+
+                    if (leftPtr < rightPtr)
+                    {
+                        Swap(array, leftPtr, rightPtr);
+                    }
+                }
+                Swap(array, pivot, rightPtr);
+                pivot = rightPtr;
+
+                QuickSortFunction(array, start, pivot - 1, comparer);
+                QuickSortFunction(array, pivot + 1, end, comparer);
             }
         }
-        Swap(array, pivot, rightPtr);
-        pivot = rightPtr;
-
-        QuickSortFunction(array, start, pivot - 1, comparer);
-        QuickSortFunction(array, pivot + 1, end, comparer);
-    }
-}
 
 
         private static void Swap<T>(T[] array, int pointer1, int pointer2)

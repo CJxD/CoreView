@@ -11,6 +11,7 @@ Suppress information logs rather that show only error logs
 SMART data improvements (icons)
 Error log icons
 Store general information in database too
+Separate hard drives with partitions
 
 == Changes (0.8.0.2) ==
 BIOS Version data fixed

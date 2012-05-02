@@ -20,6 +20,7 @@ namespace CoreView
         public string Comments { get; set; }
 
         public string Architecture = "";
+        public bool DirtyFlag = false;
 		public string Name = "";
 		public string NetworkDomain = "";
 		public string OEMData = "";
@@ -513,6 +514,9 @@ namespace CoreView
 
             this.OEMLogo = DataRetriever.GetValueBytes(WMIDataTemp1[0], "OEMLogoBitmap");
             this.PrimaryOwner = DataRetriever.GetValue(WMIDataTemp1[0], "PrimaryOwnerName");
+
+            WMIDataTemp1 = DataRetriever.GetWMIData("Win32_Volume", "SystemVolume = True");
+            this.DirtyFlag = DataRetriever.GetValueBool(WMIDataTemp1[0], "DirtyBitSet");
 
             // Unique ID - composite of processor ID and hard drive serial numbers
             string id = "";

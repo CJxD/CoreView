@@ -95,6 +95,8 @@
             this.columnHeader40 = new System.Windows.Forms.ColumnHeader();
             this.tab_logs = new System.Windows.Forms.TabPage();
             this.logs_container = new System.Windows.Forms.SplitContainer();
+            this.logs_quick_4 = new System.Windows.Forms.Label();
+            this.logs_quick_title_4 = new System.Windows.Forms.Label();
             this.logs_quick_3 = new System.Windows.Forms.Label();
             this.logs_quick_2 = new System.Windows.Forms.Label();
             this.logs_quick_title_2 = new System.Windows.Forms.Label();
@@ -1093,6 +1095,8 @@
             // 
             // logs_container.Panel1
             // 
+            this.logs_container.Panel1.Controls.Add(this.logs_quick_4);
+            this.logs_container.Panel1.Controls.Add(this.logs_quick_title_4);
             this.logs_container.Panel1.Controls.Add(this.logs_quick_3);
             this.logs_container.Panel1.Controls.Add(this.logs_quick_2);
             this.logs_container.Panel1.Controls.Add(this.logs_quick_title_2);
@@ -1110,6 +1114,27 @@
             this.logs_container.SplitterDistance = 200;
             this.logs_container.TabIndex = 7;
             // 
+            // logs_quick_4
+            // 
+            this.logs_quick_4.AutoSize = true;
+            this.logs_quick_4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.logs_quick_4.Location = new System.Drawing.Point(20, 314);
+            this.logs_quick_4.Name = "logs_quick_4";
+            this.logs_quick_4.Size = new System.Drawing.Size(30, 17);
+            this.logs_quick_4.TabIndex = 18;
+            this.logs_quick_4.Text = "Info";
+            this.logs_quick_4.MouseHover += new System.EventHandler(this.showFullTextToolTip);
+            // 
+            // logs_quick_title_4
+            // 
+            this.logs_quick_title_4.AutoSize = true;
+            this.logs_quick_title_4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.logs_quick_title_4.Location = new System.Drawing.Point(10, 290);
+            this.logs_quick_title_4.Name = "logs_quick_title_4";
+            this.logs_quick_title_4.Size = new System.Drawing.Size(94, 17);
+            this.logs_quick_title_4.TabIndex = 17;
+            this.logs_quick_title_4.Text = "\'Dirty\' Flag Set:";
+            // 
             // logs_quick_3
             // 
             this.logs_quick_3.AutoSize = true;
@@ -1119,6 +1144,7 @@
             this.logs_quick_3.Size = new System.Drawing.Size(30, 17);
             this.logs_quick_3.TabIndex = 16;
             this.logs_quick_3.Text = "Info";
+            this.logs_quick_3.MouseHover += new System.EventHandler(this.showFullTextToolTip);
             // 
             // logs_quick_2
             // 
@@ -4369,10 +4395,12 @@
         private System.Windows.Forms.Label smartSepLabel;
         private System.Windows.Forms.Label biosSepLabel;
         private System.Windows.Forms.ToolTip showFullText;
-        private System.Windows.Forms.Label logs_quick_2;
-        private System.Windows.Forms.Label logs_quick_title_2;
         private System.Windows.Forms.Label logs_quick_1;
         private System.Windows.Forms.Label logs_quick_title_1;
+        private System.Windows.Forms.Label logs_quick_4;
+        private System.Windows.Forms.Label logs_quick_title_4;
         private System.Windows.Forms.Label logs_quick_3;
+        private System.Windows.Forms.Label logs_quick_2;
+        private System.Windows.Forms.Label logs_quick_title_2;
     }
 }

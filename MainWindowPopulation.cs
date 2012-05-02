@@ -638,6 +638,8 @@ namespace CoreView
                     logs_quick_2.Text = "No information available";
                     logs_quick_3.Text = "";
                 }
+                // Dirty bit
+                logs_quick_4.Text = currentComputer.DirtyFlag.ToString();
 
 				// Only change if number of items has changed
 				if (logs_details.Items.Count != currentComputer.Log.Count)
