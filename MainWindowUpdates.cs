@@ -70,7 +70,7 @@ namespace CoreView
             {
                 currentComputer.HardDrive[harddrive_list.SelectedIndex].GetVolatileInfo();
             }
-
+            
             // Database search results before the thread has finished
             if (temporary_database_details.Items.Count != database_details.Items.Count)
             {
@@ -80,6 +80,8 @@ namespace CoreView
                 {
                     database_details.Items.Add((ListViewItem)item.Clone());
                 }
+                // Quicksort the details list by the score column with the sortListView function in MainWindowSorting
+                sortListView(database_details, 1, Sorting.Order.Descending);
             }
         }
 

@@ -5,7 +5,12 @@ namespace CoreView
 {
 	public static class Sorting
 	{
-        private static Random random = new Random();
+        private static Random Random = new Random();
+        public enum Order
+        {
+            Ascending,
+            Descending
+        }
 
         /// <summary>
         /// Quick sort interface. 
@@ -16,8 +21,8 @@ namespace CoreView
         /// <param name="comparer">If type is not IComparable, provide a Comparer</param>
         /// Using a type variable means any datatype can be sent as long as it has a type comparer
         /// Can specify a type comparer or not. If not specified, default is used.
-        public static void QuickSort<T>(T[] array, bool ascending) { QuickSort(array, ascending, Comparer<T>.Default); }
-        public static void QuickSort<T>(T[] array, bool ascending, Comparer<T> comparer)
+        public static void QuickSort<T>(T[] array, Order order) { QuickSort(array, order, Comparer<T>.Default); }
+        public static void QuickSort<T>(T[] array, Order order, Comparer<T> comparer)
 		{
             // If the array is null, don't do anything to it
             if (array.Length > 0)
@@ -27,17 +32,13 @@ namespace CoreView
                 int right = array.Length - 1;
                 QuickSortFunction(array, left, right, comparer);
 
-                if (!ascending)
+                if (order == Order.Descending)
                 {
-                    // If not ascending order, reverse
-                    T[] result = new T[array.Length];
-                    for (int i = 0; i < array.Length - 1; i++)
+                    // If not ascending order, reverse by swapping outside to inside
+                    for (int i = 0; i < array.Length / 2; i++)
                     {
-                        // Copy temp to result in reverse order
-                        result[i] = array[(array.Length - 1) - i];
+                        Swap(array, i, (array.Length - 1) - i);
                     }
-                    // Replace the array with the reverse-ordered one
-                    array = result;
                 }
             }
 		}

@@ -37,3 +37,9 @@ Added dirty flag status to system drive
 == Changes (0.8.0.5) ==
 Fixed a bug that causes the program to close at startup - ideally needs more attention to see which exception is thrown
 Added default weightings for complaints
+
+== Changes (0.8.0.6) ==
+Fixed the error 'Value was either too large or too small for a UInt32'
+Stopped non-square OEM logos from stretching badly
+Fixed order of database search results. Highest first.
+(Code internals) Enumeration of sorting orders as Order.Ascending or Order.Descending instead of true/false

@@ -1055,6 +1055,7 @@
             this.database_details.TabIndex = 4;
             this.database_details.UseCompatibleStateImageBehavior = false;
             this.database_details.View = System.Windows.Forms.View.Details;
+            this.database_details.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.database_details_ColumnClick);
             this.database_details.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.database_details_ItemSelectionChanged);
             // 
             // columnHeader38
@@ -3886,7 +3887,6 @@
             this.overview_icon.Location = new System.Drawing.Point(35, 18);
             this.overview_icon.Name = "overview_icon";
             this.overview_icon.Size = new System.Drawing.Size(128, 128);
-            this.overview_icon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.overview_icon.TabIndex = 4;
             this.overview_icon.TabStop = false;
             // 

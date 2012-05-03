@@ -432,7 +432,7 @@ namespace CoreView
                 // Resize last column
                 driver_details.Columns[driver_details.Columns.Count - 1].Width = -2;
                 // Sort
-                sortListView(driver_details, 0, true);
+                sortListView(driver_details, 0, Sorting.Order.Ascending);
             }
             catch (Exception)
             {
@@ -466,7 +466,7 @@ namespace CoreView
                     }
                 }
                 software_details.Columns[software_details.Columns.Count - 1].Width = -2;
-                sortListView(software_details, 0, true);
+                sortListView(software_details, 0, Sorting.Order.Ascending);
             }
             catch (Exception)
             {
@@ -497,7 +497,7 @@ namespace CoreView
                     }));
                     }
                 }
-                sortListView(addresses_details, 0, true);
+                sortListView(addresses_details, 0, Sorting.Order.Ascending);
             }
             catch (Exception)
             {
@@ -529,7 +529,7 @@ namespace CoreView
                     }
                 }
                 irqs_details.Columns[irqs_details.Columns.Count - 1].Width = -2;
-                sortListView(irqs_details, 0, true);
+                sortListView(irqs_details, 0, Sorting.Order.Ascending);
             }
             catch (Exception)
             {
@@ -604,7 +604,7 @@ namespace CoreView
                     }
                 }
                 processes_details.Columns[processes_details.Columns.Count - 1].Width = -2;
-                sortListView(processes_details, 0, true);
+                sortListView(processes_details, 0, Sorting.Order.Ascending);
             }
             catch (Exception)
             {

@@ -583,16 +583,21 @@ namespace CoreView
         // Wrappers for alternative data types
         public static UInt16 GetValueUInt16(ManagementObject m, string f)
         {
-			try
-			{
-				return Convert.ToUInt16(GetValue(m, f));
-			}
-			catch (FormatException)
-			{
-				// If there was a problem with the input format
-				// return 0 and don't complain
-				return 0;
-			}
+            try
+            {
+                return Convert.ToUInt16(GetValue(m, f));
+            }
+            catch (FormatException)
+            {
+                // If there was a problem with the input format
+                // return 0 and don't complain
+                return 0;
+            }
+            catch (OverflowException)
+            {
+                // Same for if the value falls outside the acceptable bounds of the container
+                return 0;
+            }
         }
         public static UInt32 GetValueUInt32(ManagementObject m, string f)
         {
@@ -604,6 +609,10 @@ namespace CoreView
 			{
 				return 0;
 			}
+            catch (OverflowException)
+            {
+                return 0;
+            }
         }
         public static UInt64 GetValueUInt64(ManagementObject m, string f)
         {
@@ -615,6 +624,10 @@ namespace CoreView
 			{
 				return 0;
 			}
+            catch (OverflowException)
+            {
+                return 0;
+            }
         }
         public static Int16 GetValueInt16(ManagementObject m, string f)
         {
@@ -626,6 +639,10 @@ namespace CoreView
 			{
 				return 0;
 			}
+            catch (OverflowException)
+            {
+                return 0;
+            }
         }
         public static Int32 GetValueInt32(ManagementObject m, string f)
         {
@@ -637,6 +654,10 @@ namespace CoreView
 			{
 				return 0;
 			}
+            catch (OverflowException)
+            {
+                return 0;
+            }
         }
         public static Int64 GetValueInt64(ManagementObject m, string f)
         {
@@ -648,6 +669,10 @@ namespace CoreView
 			{
 				return 0;
 			}
+            catch (OverflowException)
+            {
+                return 0;
+            }
         }
         public static double GetValueFloat(ManagementObject m, string f)
         {
@@ -659,6 +684,10 @@ namespace CoreView
 			{
 				return 0;
 			}
+            catch (OverflowException)
+            {
+                return 0;
+            }
         }
         public static bool GetValueBool(ManagementObject m, string f)
         {

@@ -18,18 +18,18 @@ namespace CoreView
         public UInt32 CacheL3 = 0;
         public string Caption = "N/A";
         public UInt32 Cores = 0;
-		public UInt32 CurrentClock = 0;
-		public string ErrorDescription = "N/A";
+        public UInt32 CurrentClock = 0;
+        public string ErrorDescription = "N/A";
         public string Family = "N/A";
         public string Manufacturer = "N/A";
         public string Model = "N/A";
-		public UInt32 ReferenceClock = 0;
+        public UInt32 ReferenceClock = 0;
         public UInt16 Revision = 0;
         public string Socket = "N/A";
         public string Status = "N/A";
         public string Stepping = "N/A";
         public Int16 Temperature = 0;
-		public UInt16 ThermalDesignPower = 0;
+        public UInt16 ThermalDesignPower = 0;
         public UInt32 Threads = 0;
         public UInt16 Usage = 0;
         // Further fields can be added here. Simply add a data fetch in GetInfo and add it to the database creation tables.
@@ -59,8 +59,8 @@ namespace CoreView
                 this.CacheL3 = DataRetriever.GetValueUInt32(wmiProcessor, "L3CacheSize");
                 this.Caption = DataRetriever.GetValue(wmiProcessor, "Caption");
                 this.Cores = DataRetriever.GetValueUInt32(wmiProcessor, "NumberOfCores");
-				this.CurrentClock = DataRetriever.GetValueUInt32(wmiProcessor, "CurrentClockSpeed");
-				this.ErrorDescription = DataRetriever.GetValue(wmiProcessor, "ErrorDescription");
+                this.CurrentClock = DataRetriever.GetValueUInt32(wmiProcessor, "CurrentClockSpeed");
+                this.ErrorDescription = DataRetriever.GetValue(wmiProcessor, "ErrorDescription");
                 this.Family = DataRetriever.ConvertFamily(DataRetriever.GetValueUInt16(wmiProcessor, "Family"));
                 this.Manufacturer = DataRetriever.GetValue(wmiProcessor, "Manufacturer");
                 this.Model = DataRetriever.GetValue(wmiProcessor, "Name");
@@ -82,40 +82,59 @@ namespace CoreView
         public void GetVolatileInfo()
         {
             DataRetriever.RefreshSensors(HardwareType.CPU, 0);
-            this.CurrentClock = Convert.ToUInt32(DataRetriever.GetSensorValue(HardwareType.CPU, 0, SensorType.Clock, 1));
-            this.Temperature = Convert.ToInt16(DataRetriever.GetSensorValue(HardwareType.CPU, 0, SensorType.Temperature, 0));
-            this.Usage = Convert.ToUInt16(DataRetriever.GetSensorValue(HardwareType.CPU, 0, SensorType.Load, 0));
+            try
+            {
+                this.CurrentClock = Convert.ToUInt32(DataRetriever.GetSensorValue(HardwareType.CPU, 0, SensorType.Clock, 1));
+            }
+            catch (Exception)
+            {
+                // Swallow all exceptions
+            }
+            try
+            {
+                this.Temperature = Convert.ToInt16(DataRetriever.GetSensorValue(HardwareType.CPU, 0, SensorType.Temperature, 0));
+            }
+            catch (Exception)
+            {
+            }
+            try
+            {
+                this.Usage = Convert.ToUInt16(DataRetriever.GetSensorValue(HardwareType.CPU, 0, SensorType.Load, 0));
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 
     public class Motherboard
     {
         public string Availability = "N/A";
-		public string ErrorDescription = "N/A";
+        public string ErrorDescription = "N/A";
         public string Manufacturer = "N/A";
         public string Model = "N/A";
-		public string ProductID = "N/A";
-		public string SerialID = "N/A";
+        public string ProductID = "N/A";
+        public string SerialID = "N/A";
         public string Status = "N/A";
         public Int16 Temperature = 0;
 
         public Motherboard() { }
-		public Motherboard(ManagementObject wmiBaseboard, ManagementObject wmiMotherboardDevice)
+        public Motherboard(ManagementObject wmiBaseboard, ManagementObject wmiMotherboardDevice)
         {
             this.GetInfo(wmiBaseboard, wmiMotherboardDevice);
         }
 
-		// This class requires 2 WMI classes for all data
-		public void GetInfo(ManagementObject wmiBaseboard, ManagementObject wmiMotherboardDevice)
+        // This class requires 2 WMI classes for all data
+        public void GetInfo(ManagementObject wmiBaseboard, ManagementObject wmiMotherboardDevice)
         {
             try
             {
-				this.Availability = DataRetriever.ConvertAvailability(DataRetriever.GetValueUInt16(wmiMotherboardDevice, "Availability"));
-				this.ErrorDescription = DataRetriever.GetValue(wmiMotherboardDevice, "ErrorDescription");
+                this.Availability = DataRetriever.ConvertAvailability(DataRetriever.GetValueUInt16(wmiMotherboardDevice, "Availability"));
+                this.ErrorDescription = DataRetriever.GetValue(wmiMotherboardDevice, "ErrorDescription");
                 this.Manufacturer = DataRetriever.GetValue(wmiBaseboard, "Manufacturer");
                 this.Model = DataRetriever.GetValue(wmiBaseboard, "Model");
-				this.ProductID = DataRetriever.GetValue(wmiBaseboard, "Product");
-				this.SerialID = DataRetriever.GetValue(wmiBaseboard, "SerialNumber");
+                this.ProductID = DataRetriever.GetValue(wmiBaseboard, "Product");
+                this.SerialID = DataRetriever.GetValue(wmiBaseboard, "SerialNumber");
                 this.Status = DataRetriever.GetValue(wmiBaseboard, "Status");
             }
             catch (Exception e)
@@ -127,14 +146,20 @@ namespace CoreView
         public void GetVolatileInfo()
         {
             DataRetriever.RefreshSensors(HardwareType.Mainboard, 0);
-            this.Temperature = Convert.ToInt16(DataRetriever.GetSensorValue(HardwareType.Mainboard, 0, SensorType.Temperature, 0));
+            try
+            {
+                this.Temperature = Convert.ToInt16(DataRetriever.GetSensorValue(HardwareType.Mainboard, 0, SensorType.Temperature, 0));
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 
     public class BIOS
     {
         public string Info = "N/A";
-		public string SerialID = "N/A";
+        public string SerialID = "N/A";
         public string Version = "N/A";
 
         public BIOS() { }
@@ -148,7 +173,7 @@ namespace CoreView
             try
             {
                 this.Info = DataRetriever.GetValue(wmiBIOS, "Description");
-				this.SerialID = DataRetriever.GetValue(wmiBIOS, "SerialNumber");
+                this.SerialID = DataRetriever.GetValue(wmiBIOS, "SerialNumber");
                 // Get the version as an array of strings
                 string[] versionTemp = DataRetriever.GetValueArray(wmiBIOS, "BIOSVersion");
                 // Join the pieces together for the string variable
@@ -166,8 +191,8 @@ namespace CoreView
         public string Availability = "N/A";
         public string Bank = "N/A";
         public UInt64 Capacity = 0;
-		public string DeviceLocation = "N/A";
-		public string ErrorDescription = "N/A";
+        public string DeviceLocation = "N/A";
+        public string ErrorDescription = "N/A";
         public string Manufacturer = "N/A";
         public string Model = "N/A";
         public UInt32 Speed = 0;
@@ -188,8 +213,8 @@ namespace CoreView
                 this.Capacity = DataRetriever.GetValueUInt64(wmiPhysicalMemory, "Capacity");
                 // Convert to MB
                 this.Capacity = this.Capacity / (1024 * 1024);
-				this.DeviceLocation = DataRetriever.GetValue(wmiPhysicalMemory, "DeviceLocator");
-				//this.ErrorDescription = DataRetriever.GetValue(wmiPhysicalMemory, "ErrorDescription");
+                this.DeviceLocation = DataRetriever.GetValue(wmiPhysicalMemory, "DeviceLocator");
+                //this.ErrorDescription = DataRetriever.GetValue(wmiPhysicalMemory, "ErrorDescription");
                 this.Manufacturer = DataRetriever.GetValue(wmiPhysicalMemory, "Manufacturer");
                 this.Model = DataRetriever.GetValue(wmiPhysicalMemory, "Name");
                 this.Speed = DataRetriever.GetValueUInt32(wmiPhysicalMemory, "Speed");
@@ -206,21 +231,21 @@ namespace CoreView
     {
         public string Architecture = "N/A";
         public string Availability = "N/A";
-		public UInt32 BitsPerPixel = 0;
+        public UInt32 BitsPerPixel = 0;
         public UInt32 CurrentClock = 0;
-		public UInt32 CurrentRefresh = 0;
-		public string DriverDate = "N/A";
-		public string DriverVersion = "N/A";
-		public string ErrorDescription = "N/A";
-		public UInt32 HorizontalResolution = 0;
-		public UInt32 MaxRefresh = 0;
-		public UInt32 MemorySize = 0;
-		public string MemoryType = "N/A";
-		public UInt32 MinRefresh = 0;
+        public UInt32 CurrentRefresh = 0;
+        public string DriverDate = "N/A";
+        public string DriverVersion = "N/A";
+        public string ErrorDescription = "N/A";
+        public UInt32 HorizontalResolution = 0;
+        public UInt32 MaxRefresh = 0;
+        public UInt32 MemorySize = 0;
+        public string MemoryType = "N/A";
+        public UInt32 MinRefresh = 0;
         public string Name = "N/A";
         public string Status = "N/A";
         public Int16 Temperature = 0;
-		public UInt32 VerticalResolution = 0;
+        public UInt32 VerticalResolution = 0;
 
         public GraphicsAdapter() { }
         public GraphicsAdapter(ManagementObject wmiVideoController)
@@ -234,20 +259,20 @@ namespace CoreView
             {
                 this.Architecture = DataRetriever.ConvertVideoArchitecture(DataRetriever.GetValueUInt16(wmiVideoController, "VideoArchitecture"));
                 this.Availability = DataRetriever.ConvertAvailability(DataRetriever.GetValueUInt16(wmiVideoController, "Availability"));
-				this.BitsPerPixel = DataRetriever.GetValueUInt32(wmiVideoController, "CurrentBitsPerPixel");
-				this.CurrentRefresh = DataRetriever.GetValueUInt32(wmiVideoController, "CurrentRefreshRate");
-				this.DriverDate = DataRetriever.GetValueDateString(wmiVideoController, "DriverDate");
-				this.DriverVersion = DataRetriever.GetValue(wmiVideoController, "DriverVersion");
-				this.ErrorDescription = DataRetriever.GetValue(wmiVideoController, "ErrorDescription");
-				this.HorizontalResolution = DataRetriever.GetValueUInt32(wmiVideoController, "CurrentHorizontalResolution");
-				this.MaxRefresh = DataRetriever.GetValueUInt32(wmiVideoController, "MaxRefreshRate");
-				this.MemorySize = DataRetriever.GetValueUInt32(wmiVideoController, "AdapterRAM");
+                this.BitsPerPixel = DataRetriever.GetValueUInt32(wmiVideoController, "CurrentBitsPerPixel");
+                this.CurrentRefresh = DataRetriever.GetValueUInt32(wmiVideoController, "CurrentRefreshRate");
+                this.DriverDate = DataRetriever.GetValueDateString(wmiVideoController, "DriverDate");
+                this.DriverVersion = DataRetriever.GetValue(wmiVideoController, "DriverVersion");
+                this.ErrorDescription = DataRetriever.GetValue(wmiVideoController, "ErrorDescription");
+                this.HorizontalResolution = DataRetriever.GetValueUInt32(wmiVideoController, "CurrentHorizontalResolution");
+                this.MaxRefresh = DataRetriever.GetValueUInt32(wmiVideoController, "MaxRefreshRate");
+                this.MemorySize = DataRetriever.GetValueUInt32(wmiVideoController, "AdapterRAM");
                 this.MemorySize = this.MemorySize / (1024 * 1024);
-				this.MemoryType = DataRetriever.ConvertVideoArchitecture(DataRetriever.GetValueUInt16(wmiVideoController, "VideoMemoryType"));
-				this.MinRefresh = DataRetriever.GetValueUInt32(wmiVideoController, "MinRefreshRate");
+                this.MemoryType = DataRetriever.ConvertVideoArchitecture(DataRetriever.GetValueUInt16(wmiVideoController, "VideoMemoryType"));
+                this.MinRefresh = DataRetriever.GetValueUInt32(wmiVideoController, "MinRefreshRate");
                 this.Name = DataRetriever.GetValue(wmiVideoController, "Name");
                 this.Status = DataRetriever.GetValue(wmiVideoController, "Status");
-				this.VerticalResolution = DataRetriever.GetValueUInt32(wmiVideoController, "CurrentVerticalResolution");
+                this.VerticalResolution = DataRetriever.GetValueUInt32(wmiVideoController, "CurrentVerticalResolution");
             }
             catch (Exception e)
             {
@@ -268,81 +293,93 @@ namespace CoreView
                 hardwareType = HardwareType.GpuAti;
             }
             DataRetriever.RefreshSensors(hardwareType, 0);
-            this.CurrentClock = Convert.ToUInt32(DataRetriever.GetSensorValue(hardwareType, 0, SensorType.Clock, 0));
-            this.Temperature = Convert.ToInt16(DataRetriever.GetSensorValue(hardwareType, 0, SensorType.Temperature, 0));
+            try
+            {
+                this.CurrentClock = Convert.ToUInt32(DataRetriever.GetSensorValue(hardwareType, 0, SensorType.Clock, 0));
+            }
+            catch (Exception)
+            {
+            }
+            try
+            {
+                this.Temperature = Convert.ToInt16(DataRetriever.GetSensorValue(hardwareType, 0, SensorType.Temperature, 0));
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 
-	public class NetworkAdapter
-	{
-		public string AdapterType = "N/A";
-		public string Availability = "N/A";
-		public UInt16 ConnectionStatus = 0;
-		public UInt64 CurrentSpeed = 0;
-		public string ErrorDescription = "N/A";
-		public string Manufacturer = "N/A";
-		public string MACAddress = "N/A";
-		public UInt64 MaxSpeed = 0;
-		public string Name = "N/A";
-		// This property isn't in the spec, but is useful for organising the order
-		// of which adapters are shown. Real adapters at the top.
-		public bool PhysicalAdapter = false;
+    public class NetworkAdapter
+    {
+        public string AdapterType = "N/A";
+        public string Availability = "N/A";
+        public UInt16 ConnectionStatus = 0;
+        public UInt64 CurrentSpeed = 0;
+        public string ErrorDescription = "N/A";
+        public string Manufacturer = "N/A";
+        public string MACAddress = "N/A";
+        public UInt64 MaxSpeed = 0;
+        public string Name = "N/A";
+        // This property isn't in the spec, but is useful for organising the order
+        // of which adapters are shown. Real adapters at the top.
+        public bool PhysicalAdapter = false;
         public string Status = "N/A";
 
-		public NetworkAdapter() { }
-		public NetworkAdapter(ManagementObject wmiNetworkAdapter)
-		{
-			this.GetInfo(wmiNetworkAdapter);
-		}
+        public NetworkAdapter() { }
+        public NetworkAdapter(ManagementObject wmiNetworkAdapter)
+        {
+            this.GetInfo(wmiNetworkAdapter);
+        }
 
-		public void GetInfo(ManagementObject wmiNetworkAdapter)
-		{
-			try
-			{
-				this.AdapterType = DataRetriever.GetValue(wmiNetworkAdapter, "AdapterType");
-				this.Availability = DataRetriever.ConvertAvailability(DataRetriever.GetValueUInt16(wmiNetworkAdapter, "Availability"));
-				//this.ConnectionStatus = DataRetriever.GetValueUInt16(wmiNetworkAdapter, "NetConnectionStatus");
-				//this.CurrentSpeed = DataRetriever.GetValueUInt64(wmiNetworkAdapter, "Speed");
-				this.ErrorDescription = DataRetriever.GetValue(wmiNetworkAdapter, "ErrorDescription");
-				this.Manufacturer = DataRetriever.GetValue(wmiNetworkAdapter, "Manufacturer");
-				this.MACAddress = DataRetriever.GetValue(wmiNetworkAdapter, "MACAddress");
-				//this.MaxSpeed = DataRetriever.GetValueUInt64(wmiNetworkAdapter, "MaxSpeed");
-				this.Name = DataRetriever.GetValue(wmiNetworkAdapter, "Caption");
+        public void GetInfo(ManagementObject wmiNetworkAdapter)
+        {
+            try
+            {
+                this.AdapterType = DataRetriever.GetValue(wmiNetworkAdapter, "AdapterType");
+                this.Availability = DataRetriever.ConvertAvailability(DataRetriever.GetValueUInt16(wmiNetworkAdapter, "Availability"));
+                //this.ConnectionStatus = DataRetriever.GetValueUInt16(wmiNetworkAdapter, "NetConnectionStatus");
+                //this.CurrentSpeed = DataRetriever.GetValueUInt64(wmiNetworkAdapter, "Speed");
+                this.ErrorDescription = DataRetriever.GetValue(wmiNetworkAdapter, "ErrorDescription");
+                this.Manufacturer = DataRetriever.GetValue(wmiNetworkAdapter, "Manufacturer");
+                this.MACAddress = DataRetriever.GetValue(wmiNetworkAdapter, "MACAddress");
+                //this.MaxSpeed = DataRetriever.GetValueUInt64(wmiNetworkAdapter, "MaxSpeed");
+                this.Name = DataRetriever.GetValue(wmiNetworkAdapter, "Caption");
                 this.PhysicalAdapter = DataRetriever.GetValueBool(wmiNetworkAdapter, "PhysicalAdapter");
                 this.Status = DataRetriever.GetValue(wmiNetworkAdapter, "Status");
-			}
-			catch (Exception e)
-			{
+            }
+            catch (Exception e)
+            {
                 ErrorDialogue errorReporter = new ErrorDialogue(e);
-			}
-		}
-	}
+            }
+        }
+    }
 
     public class HardDrive
     {
         public string Availability = "N/A";
         public UInt64 Capacity = 0;
-		public string ErrorDescription = "N/A";
+        public string ErrorDescription = "N/A";
         public string Manufacturer = "N/A";
         public string Model = "N/A";
         public UInt32 Partitions = 0;
         // Make SMART Data a property rather than a field so it doesn't get mixed in
         // with everything else when reporting data
-        public HardDriveSMARTData SMARTData {get; set;}
+        public HardDriveSMARTData SMARTData { get; set; }
         public string Status = "N/A";
         public Int16 Temperature = 0;
 
         public HardDrive() { }
-		// Single parameter constructor
+        // Single parameter constructor
         public HardDrive(ManagementObject wmiDiskDrive, ManagementObject wmiATAPISmartData, ManagementObject wmiFailurePredictStatus)
         {
-			// If SMART data is found, include it in the Hard Drive data
-			if (wmiATAPISmartData != null)
-			{
-				SMARTData = new HardDriveSMARTData();
-				this.SMARTData.GetInfo(wmiATAPISmartData);
-			}
-			this.GetInfo(wmiDiskDrive, wmiFailurePredictStatus);
+            // If SMART data is found, include it in the Hard Drive data
+            if (wmiATAPISmartData != null)
+            {
+                SMARTData = new HardDriveSMARTData();
+                this.SMARTData.GetInfo(wmiATAPISmartData);
+            }
+            this.GetInfo(wmiDiskDrive, wmiFailurePredictStatus);
         }
 
         public void GetInfo(ManagementObject wmiDiskDrive, ManagementObject wmiFailurePredictStatus)
@@ -353,7 +390,7 @@ namespace CoreView
                 this.Capacity = DataRetriever.GetValueUInt64(wmiDiskDrive, "Size");
                 // Convert to GB
                 this.Capacity = this.Capacity / (1024 * 1024 * 1024);
-				this.ErrorDescription = DataRetriever.GetValue(wmiDiskDrive, "ErrorDescription");
+                this.ErrorDescription = DataRetriever.GetValue(wmiDiskDrive, "ErrorDescription");
                 this.Manufacturer = DataRetriever.GetValue(wmiDiskDrive, "Manufacturer");
                 this.Model = DataRetriever.GetValue(wmiDiskDrive, "Name");
                 this.Partitions = DataRetriever.GetValueUInt32(wmiDiskDrive, "Partitions");
@@ -383,12 +420,18 @@ namespace CoreView
         public void GetVolatileInfo()
         {
             DataRetriever.RefreshSensors(HardwareType.HDD, 0);
-            this.Temperature = Convert.ToInt16(DataRetriever.GetSensorValue(HardwareType.HDD, 0, SensorType.Temperature, 0));
+            try
+            {
+                this.Temperature = Convert.ToInt16(DataRetriever.GetSensorValue(HardwareType.HDD, 0, SensorType.Temperature, 0));
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 
-	public class HardDriveSMARTData
-	{
+    public class HardDriveSMARTData
+    {
         public UInt16 ReadErrorRate = 0;
         public UInt16 ThroughputPerformance = 0;
         public UInt16 SpinUpTime = 0;
@@ -451,13 +494,13 @@ namespace CoreView
         public UInt16 ReadErrorRetryRate = 0;
         public UInt16 FreeFallProtection = 0;
 
-		public HardDriveSMARTData() { }
+        public HardDriveSMARTData() { }
         public HardDriveSMARTData(ManagementObject wmiATAPISmartData)
         {
-			this.GetInfo(wmiATAPISmartData);
+            this.GetInfo(wmiATAPISmartData);
         }
 
-		public void GetInfo(ManagementObject wmiATAPISmartData)
+        public void GetInfo(ManagementObject wmiATAPISmartData)
         {
             try
             {
@@ -487,50 +530,50 @@ namespace CoreView
                 ErrorDialogue errorReporter = new ErrorDialogue(e);
             }
         }
-	}
+    }
 
-	public class OpticalDrive
-	{
-		public string Availability = "N/A";
-		public string ErrorDescription = "N/A";
-		public string Manufacturer = "N/A";
-		public string MediaType = "N/A";
-		public string Name = "N/A";
+    public class OpticalDrive
+    {
+        public string Availability = "N/A";
+        public string ErrorDescription = "N/A";
+        public string Manufacturer = "N/A";
+        public string MediaType = "N/A";
+        public string Name = "N/A";
         public string Status = "N/A";
-		public double TransferRate = 0;
+        public double TransferRate = 0;
 
-		public OpticalDrive() { }
-		public OpticalDrive(ManagementObject wmiCDROMDrive)
-		{
-			this.GetInfo(wmiCDROMDrive);
-		}
+        public OpticalDrive() { }
+        public OpticalDrive(ManagementObject wmiCDROMDrive)
+        {
+            this.GetInfo(wmiCDROMDrive);
+        }
 
-		public void GetInfo(ManagementObject wmiCDROMDrive)
-		{
-			try
-			{
+        public void GetInfo(ManagementObject wmiCDROMDrive)
+        {
+            try
+            {
                 this.Availability = DataRetriever.ConvertAvailability(DataRetriever.GetValueUInt16(wmiCDROMDrive, "Availability"));
-				this.ErrorDescription = DataRetriever.GetValue(wmiCDROMDrive, "ErrorDescription");
-				this.Manufacturer = DataRetriever.GetValue(wmiCDROMDrive, "Manufacturer");
-				this.MediaType = DataRetriever.GetValue(wmiCDROMDrive, "MediaType");
-				this.Name = DataRetriever.GetValue(wmiCDROMDrive, "Name");
+                this.ErrorDescription = DataRetriever.GetValue(wmiCDROMDrive, "ErrorDescription");
+                this.Manufacturer = DataRetriever.GetValue(wmiCDROMDrive, "Manufacturer");
+                this.MediaType = DataRetriever.GetValue(wmiCDROMDrive, "MediaType");
+                this.Name = DataRetriever.GetValue(wmiCDROMDrive, "Name");
                 this.Status = DataRetriever.GetValue(wmiCDROMDrive, "Status");
                 this.TransferRate = DataRetriever.GetValueFloat(wmiCDROMDrive, "TransferRate");
-			}
-			catch (Exception e)
-			{
+            }
+            catch (Exception e)
+            {
                 ErrorDialogue errorReporter = new ErrorDialogue(e);
-			}
-		}
-	}
+            }
+        }
+    }
 
     public class PCICard
     {
         public string Manufacturer = "N/A";
         public string Model = "N/A";
-		public string Slot = "N/A";
+        public string Slot = "N/A";
         public string Status = "N/A";
-		public string Tag = "N/A";
+        public string Tag = "N/A";
         public string VccVoltageModes = "N/A";
 
         public PCICard() { }
@@ -545,9 +588,9 @@ namespace CoreView
             {
                 this.Manufacturer = DataRetriever.GetValue(wmiSystemSlot, "Manufacturer");
                 this.Model = DataRetriever.GetValue(wmiSystemSlot, "Name");
-				this.Slot = DataRetriever.GetValue(wmiSystemSlot, "SlotDesignation");
+                this.Slot = DataRetriever.GetValue(wmiSystemSlot, "SlotDesignation");
                 this.Status = DataRetriever.GetValue(wmiSystemSlot, "Status");
-				this.Tag = DataRetriever.GetValue(wmiSystemSlot, "Tag");
+                this.Tag = DataRetriever.GetValue(wmiSystemSlot, "Tag");
                 // Voltage conversion
                 UInt16[] voltages = DataRetriever.GetValueUInt16Array(wmiSystemSlot, "VccMixedVoltageSupport");
                 string[] voltageStrings = new string[voltages.Length];
@@ -568,7 +611,7 @@ namespace CoreView
     {
         public string Availability = "N/A";
         public string Description = "N/A";
-		public string ErrorDescription = "N/A";
+        public string ErrorDescription = "N/A";
         public string Manufacturer = "N/A";
         public string Name = "N/A";
         public string Status = "N/A";

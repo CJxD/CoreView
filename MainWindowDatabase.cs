@@ -82,7 +82,7 @@ namespace CoreView
 			abortThread.IsBackground = true;
             abortThread.Start();
             // Do a final list search
-            sortListView(database_details, 1, false);
+            sortListView(database_details, 1, Sorting.Order.Descending);
         }
 
         private void abortDatabaseOperation()
@@ -291,11 +291,6 @@ namespace CoreView
                     computer.Comments
                 }));
             }
-            // Autosize the last column
-            temporary_database_details.Columns[2].Width = -2;
-
-            // Quicksort the details list by the score column with the sortListView function in MainWindowSorting
-            sortListView(temporary_database_details, 1, false);
 
             // Force a finish
             Splash.AddProgressInfo("Done.", 100);
