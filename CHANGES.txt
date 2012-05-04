@@ -43,3 +43,7 @@ Fixed the error 'Value was either too large or too small for a UInt32'
 Stopped non-square OEM logos from stretching badly
 Fixed order of database search results. Highest first.
 (Code internals) Enumeration of sorting orders as Order.Ascending or Order.Descending instead of true/false
+
+== Changes (0.8.0.7) ==
+Fixed a globalisation error to do with decimal separators
+Stopped a blank unhandled exception box from occuring at startup

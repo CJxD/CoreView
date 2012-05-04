@@ -123,7 +123,6 @@ namespace CoreView
             catch (Exception e)
             {
                 ErrorDialogue errorDialogue = new ErrorDialogue(e);
-                errorDialogue.Show();
             }
         }
 

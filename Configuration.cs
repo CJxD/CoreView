@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
@@ -130,7 +131,8 @@ namespace CoreView
 						if (node != null)
 						{
 							// Add the weight key and weight value to the new dictionary
-							Weightings[classString].Add(classField.Name, Convert.ToDouble(node.InnerXml));
+                            // Use InvariantCulture to prevent the decimal separator bug in different languages.
+                            Weightings[classString].Add(classField.Name, Convert.ToDouble(node.InnerXml, CultureInfo.InvariantCulture));
 						}
 					}
 				}
@@ -148,7 +150,7 @@ namespace CoreView
 						if (node != null)
 						{
 							// Add the weight key and weight value to the new dictionary
-							Weightings[complaint].Add(classString, Convert.ToDouble(node.InnerXml));
+                            Weightings[complaint].Add(classString, Convert.ToDouble(node.InnerXml, CultureInfo.InvariantCulture));
 						}
 					}
 				}
