@@ -90,9 +90,9 @@
             this.database_search_btn = new System.Windows.Forms.Button();
             this.database_search = new System.Windows.Forms.TextBox();
             this.database_details = new System.Windows.Forms.ListView();
-            this.columnHeader38 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader39 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader40 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader38 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader39 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader40 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tab_logs = new System.Windows.Forms.TabPage();
             this.logs_container = new System.Windows.Forms.SplitContainer();
             this.logs_quick_4 = new System.Windows.Forms.Label();
@@ -107,11 +107,11 @@
             this.logs_search_btn = new System.Windows.Forms.Button();
             this.logs_search = new System.Windows.Forms.TextBox();
             this.logs_details = new System.Windows.Forms.ListView();
-            this.columnHeader41 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader42 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader43 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader44 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader45 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader41 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader42 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader43 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader44 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader45 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tab_processes = new System.Windows.Forms.TabPage();
             this.processes_container = new System.Windows.Forms.SplitContainer();
             this.processes_quick_1 = new System.Windows.Forms.Label();
@@ -121,11 +121,11 @@
             this.processes_search_btn = new System.Windows.Forms.Button();
             this.processes_search = new System.Windows.Forms.TextBox();
             this.processes_details = new System.Windows.Forms.ListView();
-            this.columnHeader33 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader34 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader35 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader36 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader37 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader33 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader34 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader35 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader36 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader37 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tab_irqs = new System.Windows.Forms.TabPage();
             this.irqs_container = new System.Windows.Forms.SplitContainer();
             this.irqs_quick_1 = new System.Windows.Forms.Label();
@@ -134,8 +134,8 @@
             this.irqs_search_btn = new System.Windows.Forms.Button();
             this.irqs_search = new System.Windows.Forms.TextBox();
             this.irqs_details = new System.Windows.Forms.ListView();
-            this.columnHeader31 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader32 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader31 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader32 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tab_addresses = new System.Windows.Forms.TabPage();
             this.addresses_container = new System.Windows.Forms.SplitContainer();
             this.addresses_quick_1 = new System.Windows.Forms.Label();
@@ -144,8 +144,8 @@
             this.addresses_search_btn = new System.Windows.Forms.Button();
             this.addresses_search = new System.Windows.Forms.TextBox();
             this.addresses_details = new System.Windows.Forms.ListView();
-            this.columnHeader29 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader30 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader29 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader30 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tab_irqsharing = new System.Windows.Forms.TabPage();
             this.irqsharing_container = new System.Windows.Forms.SplitContainer();
             this.irqsharing_quick_1 = new System.Windows.Forms.Label();
@@ -154,8 +154,8 @@
             this.irqsharing_search_btn = new System.Windows.Forms.Button();
             this.irqsharing_search = new System.Windows.Forms.TextBox();
             this.irqsharing_details = new System.Windows.Forms.ListView();
-            this.columnHeader27 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader28 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader27 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader28 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tab_software = new System.Windows.Forms.TabPage();
             this.software_container = new System.Windows.Forms.SplitContainer();
             this.software_quick_1 = new System.Windows.Forms.Label();
@@ -164,10 +164,10 @@
             this.software_search_btn = new System.Windows.Forms.Button();
             this.software_search = new System.Windows.Forms.TextBox();
             this.software_details = new System.Windows.Forms.ListView();
-            this.columnHeader23 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader26 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader25 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader24 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader26 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader25 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tab_drivers = new System.Windows.Forms.TabPage();
             this.drivers_container = new System.Windows.Forms.SplitContainer();
             this.driver_quick_1 = new System.Windows.Forms.Label();
@@ -176,10 +176,10 @@
             this.drivers_search_btn = new System.Windows.Forms.Button();
             this.driver_search = new System.Windows.Forms.TextBox();
             this.driver_details = new System.Windows.Forms.ListView();
-            this.columnHeader19 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader21 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader20 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader22 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tab_hardware = new System.Windows.Forms.TabPage();
             this.tab_cont_hardware = new System.Windows.Forms.TabControl();
             this.tab_processor = new System.Windows.Forms.TabPage();
@@ -197,8 +197,8 @@
             this.processor_list = new System.Windows.Forms.ComboBox();
             this.processor_graph_container = new System.Windows.Forms.Panel();
             this.processor_details = new System.Windows.Forms.ListView();
-            this.ch_attribute = new System.Windows.Forms.ColumnHeader();
-            this.ch_value = new System.Windows.Forms.ColumnHeader();
+            this.ch_attribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ch_value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tab_motherboard = new System.Windows.Forms.TabPage();
             this.motherboard_container = new System.Windows.Forms.SplitContainer();
             this.motherboard_quick_4 = new System.Windows.Forms.Label();
@@ -214,11 +214,11 @@
             this.motherboard_list = new System.Windows.Forms.ComboBox();
             this.biosSepLabel = new System.Windows.Forms.Label();
             this.bios_details = new System.Windows.Forms.ListView();
-            this.columnHeader46 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader47 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader46 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader47 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.motherboard_details = new System.Windows.Forms.ListView();
-            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tab_memory = new System.Windows.Forms.TabPage();
             this.memory_container = new System.Windows.Forms.SplitContainer();
             this.memory_quick_4 = new System.Windows.Forms.Label();
@@ -233,8 +233,8 @@
             this.memory_status = new System.Windows.Forms.Button();
             this.memory_list = new System.Windows.Forms.ComboBox();
             this.memory_details = new System.Windows.Forms.ListView();
-            this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tab_graphics = new System.Windows.Forms.TabPage();
             this.graphics_container = new System.Windows.Forms.SplitContainer();
             this.graphics_quick_4 = new System.Windows.Forms.Label();
@@ -250,8 +250,8 @@
             this.graphics_list = new System.Windows.Forms.ComboBox();
             this.graphics_graph_container = new System.Windows.Forms.Panel();
             this.graphics_details = new System.Windows.Forms.ListView();
-            this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader6 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tab_network = new System.Windows.Forms.TabPage();
             this.network_container = new System.Windows.Forms.SplitContainer();
             this.network_quick_4 = new System.Windows.Forms.Label();
@@ -267,8 +267,8 @@
             this.network_list = new System.Windows.Forms.ComboBox();
             this.network_graph_container = new System.Windows.Forms.Panel();
             this.network_details = new System.Windows.Forms.ListView();
-            this.columnHeader7 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader8 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tab_harddrive = new System.Windows.Forms.TabPage();
             this.harddrive_container = new System.Windows.Forms.SplitContainer();
             this.harddrive_quick_4 = new System.Windows.Forms.Label();
@@ -284,11 +284,11 @@
             this.harddrive_list = new System.Windows.Forms.ComboBox();
             this.smartSepLabel = new System.Windows.Forms.Label();
             this.harddrive_details = new System.Windows.Forms.ListView();
-            this.columnHeader11 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader12 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.smart_details = new System.Windows.Forms.ListView();
-            this.columnHeader9 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader10 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tab_optical = new System.Windows.Forms.TabPage();
             this.optical_container = new System.Windows.Forms.SplitContainer();
             this.optical_quick_2 = new System.Windows.Forms.Label();
@@ -299,8 +299,8 @@
             this.optical_status = new System.Windows.Forms.Button();
             this.optical_list = new System.Windows.Forms.ComboBox();
             this.optical_details = new System.Windows.Forms.ListView();
-            this.columnHeader13 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader14 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tab_pci = new System.Windows.Forms.TabPage();
             this.pci_container = new System.Windows.Forms.SplitContainer();
             this.pci_quick_2 = new System.Windows.Forms.Label();
@@ -311,8 +311,8 @@
             this.pci_status = new System.Windows.Forms.Button();
             this.pci_list = new System.Windows.Forms.ComboBox();
             this.pci_details = new System.Windows.Forms.ListView();
-            this.columnHeader15 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader16 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tab_usb = new System.Windows.Forms.TabPage();
             this.usb_container = new System.Windows.Forms.SplitContainer();
             this.usb_quick_2 = new System.Windows.Forms.Label();
@@ -323,8 +323,8 @@
             this.usb_status = new System.Windows.Forms.Button();
             this.usb_list = new System.Windows.Forms.ComboBox();
             this.usb_details = new System.Windows.Forms.ListView();
-            this.columnHeader17 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader18 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tab_overview = new System.Windows.Forms.TabPage();
             this.overview_container = new System.Windows.Forms.SplitContainer();
             this.overview_quick_6 = new System.Windows.Forms.Label();
@@ -1039,6 +1039,7 @@
             this.database_search.Name = "database_search";
             this.database_search.Size = new System.Drawing.Size(200, 32);
             this.database_search.TabIndex = 5;
+            this.database_search.Enter += new System.EventHandler(this.database_search_Enter);
             // 
             // database_details
             // 
@@ -1229,6 +1230,7 @@
             this.logs_search.Name = "logs_search";
             this.logs_search.Size = new System.Drawing.Size(200, 32);
             this.logs_search.TabIndex = 5;
+            this.logs_search.Enter += new System.EventHandler(this.logs_search_Enter);
             // 
             // logs_details
             // 
@@ -1375,6 +1377,7 @@
             this.processes_search.Name = "processes_search";
             this.processes_search.Size = new System.Drawing.Size(200, 32);
             this.processes_search.TabIndex = 5;
+            this.processes_search.Enter += new System.EventHandler(this.processes_search_Enter);
             // 
             // processes_details
             // 
@@ -1508,6 +1511,7 @@
             this.irqs_search.Name = "irqs_search";
             this.irqs_search.Size = new System.Drawing.Size(200, 32);
             this.irqs_search.TabIndex = 5;
+            this.irqs_search.Enter += new System.EventHandler(this.irqs_search_Enter);
             // 
             // irqs_details
             // 
@@ -1623,6 +1627,7 @@
             this.addresses_search.Name = "addresses_search";
             this.addresses_search.Size = new System.Drawing.Size(200, 32);
             this.addresses_search.TabIndex = 5;
+            this.addresses_search.Enter += new System.EventHandler(this.addresses_search_Enter);
             // 
             // addresses_details
             // 
@@ -1738,6 +1743,7 @@
             this.irqsharing_search.Name = "irqsharing_search";
             this.irqsharing_search.Size = new System.Drawing.Size(200, 32);
             this.irqsharing_search.TabIndex = 5;
+            this.irqsharing_search.Enter += new System.EventHandler(this.irqsharing_search_Enter);
             // 
             // irqsharing_details
             // 
@@ -1853,6 +1859,7 @@
             this.software_search.Name = "software_search";
             this.software_search.Size = new System.Drawing.Size(200, 32);
             this.software_search.TabIndex = 5;
+            this.software_search.Enter += new System.EventHandler(this.software_search_Enter);
             // 
             // software_details
             // 
@@ -1980,6 +1987,7 @@
             this.driver_search.Name = "driver_search";
             this.driver_search.Size = new System.Drawing.Size(200, 32);
             this.driver_search.TabIndex = 5;
+            this.driver_search.Enter += new System.EventHandler(this.driver_search_Enter);
             // 
             // driver_details
             // 
@@ -2418,6 +2426,8 @@
             // 
             // biosSepLabel
             // 
+            this.biosSepLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.biosSepLabel.AutoSize = true;
             this.biosSepLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.biosSepLabel.Location = new System.Drawing.Point(3, 298);
@@ -3231,6 +3241,8 @@
             // 
             // smartSepLabel
             // 
+            this.smartSepLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.smartSepLabel.AutoSize = true;
             this.smartSepLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.smartSepLabel.Location = new System.Drawing.Point(3, 221);
@@ -3943,6 +3955,7 @@
             // 
             // MainWindow
             // 
+            this.AcceptButton = this.addresses_search_btn;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 562);

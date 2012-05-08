@@ -12,29 +12,32 @@ namespace CoreView
         /// <param name="haystack">ListView object to search in</param>
         private void searchList(string needle, ListView haystack)
         {
-            // Focus the list view
-            haystack.Focus();
-            // Clear currently selected items
-            haystack.SelectedItems.Clear();
-            int i = 0;
-            ListViewItem found;
-            do
+            if (haystack.Items.Count > 0)
             {
-                // Recursively find all instances of the given text, starting from zero
-                found = haystack.FindItemWithText(needle, true, i, true);
-                if (found != null)
+                // Focus the list view
+                haystack.Focus();
+                // Clear currently selected items
+                haystack.SelectedItems.Clear();
+                int i = 0;
+                ListViewItem found;
+                do
                 {
-                    // Select found item
-                    found.Selected = true;
-                    // Next search starts from the next element in the list view
-                    i = found.Index + 1;
-                }
-                else
-                {
-                    // Otherwise, stop
-                    i = haystack.Items.Count;
-                }
-            } while (i < haystack.Items.Count);
+                    // Recursively find all instances of the given text, starting from zero
+                    found = haystack.FindItemWithText(needle, true, i, true);
+                    if (found != null)
+                    {
+                        // Select found item
+                        found.Selected = true;
+                        // Next search starts from the next element in the list view
+                        i = found.Index + 1;
+                    }
+                    else
+                    {
+                        // Otherwise, stop
+                        i = haystack.Items.Count;
+                    }
+                } while (i < haystack.Items.Count);
+            }
             // If nothing found, show message
             if (haystack.SelectedItems.Count == 0)
             {
@@ -80,6 +83,46 @@ namespace CoreView
         private void database_search_btn_Click(object sender, System.EventArgs e)
         {
             searchList(database_search.Text, database_details);
+        }
+
+        private void driver_search_Enter(object sender, EventArgs e)
+        {
+            this.AcceptButton = drivers_search_btn;
+        }
+
+        private void software_search_Enter(object sender, EventArgs e)
+        {
+            this.AcceptButton = software_search_btn;
+        }
+
+        private void addresses_search_Enter(object sender, EventArgs e)
+        {
+            this.AcceptButton = addresses_search_btn;
+        }
+
+        private void irqs_search_Enter(object sender, EventArgs e)
+        {
+            this.AcceptButton = irqs_search_btn;
+        }
+
+        private void irqsharing_search_Enter(object sender, EventArgs e)
+        {
+            this.AcceptButton = irqsharing_search_btn;
+        }
+
+        private void processes_search_Enter(object sender, EventArgs e)
+        {
+            this.AcceptButton = processes_search_btn;
+        }
+
+        private void logs_search_Enter(object sender, EventArgs e)
+        {
+            this.AcceptButton = logs_search_btn;
+        }
+
+        private void database_search_Enter(object sender, EventArgs e)
+        {
+            this.AcceptButton = database_search_btn;
         }
 	}
 }

@@ -1,3 +1,8 @@
+== Changes (0.8.0.8) ==
+Searches are now run when you press Enter in a search box
+Fixed blank-search bug
+Fixed expansion bug with BIOS/SMART Data labels
+
 == Changes (0.8.0.7) ==
 Fixed a globalisation error to do with decimal separators
 Stopped a blank unhandled exception box from occuring at startup
