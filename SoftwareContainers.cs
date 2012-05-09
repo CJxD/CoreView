@@ -26,9 +26,11 @@ namespace CoreView
             {
                 this.Date = DataRetriever.GetValueDateString(wmiPnPSignedDriver, "DriverDate");
                 // Try a Friendly Name first
-                // If not, do a normal name
+                // If not, do a normal name, then DeviceName, then give up
                 this.Name = DataRetriever.GetValue(wmiPnPSignedDriver, "FriendlyName");
                 if (this.Name == "") this.Name = DataRetriever.GetValue(wmiPnPSignedDriver, "DriverName");
+                if (this.Name == "") this.Name = DataRetriever.GetValue(wmiPnPSignedDriver, "DeviceName");
+                if (this.Name == "") this.Name = "Unknown";
                 this.Publisher = DataRetriever.GetValue(wmiPnPSignedDriver, "DriverProviderName");
                 this.Version = DataRetriever.GetValue(wmiPnPSignedDriver, "DriverVersion");
             }

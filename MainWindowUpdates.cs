@@ -81,7 +81,8 @@ namespace CoreView
                     database_details.Items.Add((ListViewItem)item.Clone());
                 }
                 // Quicksort the details list by the score column with the sortListView function in MainWindowSorting
-                sortListView(database_details, 1, Sorting.Order.Descending);
+                ListViewSorter sorter = new ListViewSorter(database_details);
+                sorter.Sort(1, Sorting.Order.Descending);
             }
         }
 

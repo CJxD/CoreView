@@ -82,7 +82,8 @@ namespace CoreView
 			abortThread.IsBackground = true;
             abortThread.Start();
             // Do a final list search
-            sortListView(database_details, 1, Sorting.Order.Descending);
+            ListViewSorter sorter = new ListViewSorter(database_details);
+            sorter.Sort(1, Sorting.Order.Descending);
         }
 
         private void abortDatabaseOperation()

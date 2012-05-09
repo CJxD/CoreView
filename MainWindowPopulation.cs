@@ -432,7 +432,8 @@ namespace CoreView
                 // Resize last column
                 driver_details.Columns[driver_details.Columns.Count - 1].Width = -2;
                 // Sort
-                sortListView(driver_details, 0, Sorting.Order.Ascending);
+                driverSorter = new ListViewSorter(driver_details);
+                driverSorter.Sort(0);
             }
             catch (Exception)
             {
@@ -466,7 +467,8 @@ namespace CoreView
                     }
                 }
                 software_details.Columns[software_details.Columns.Count - 1].Width = -2;
-                sortListView(software_details, 0, Sorting.Order.Ascending);
+                softwareSorter = new ListViewSorter(software_details);
+                softwareSorter.Sort(0);
             }
             catch (Exception)
             {
@@ -497,7 +499,8 @@ namespace CoreView
                     }));
                     }
                 }
-                sortListView(addresses_details, 0, Sorting.Order.Ascending);
+                addressesSorter = new ListViewSorter(addresses_details);
+                addressesSorter.Sort(0);
             }
             catch (Exception)
             {
@@ -529,7 +532,8 @@ namespace CoreView
                     }
                 }
                 irqs_details.Columns[irqs_details.Columns.Count - 1].Width = -2;
-                sortListView(irqs_details, 0, Sorting.Order.Ascending);
+                irqsSorter = new ListViewSorter(irqs_details);
+                irqsSorter.Sort(0);
             }
             catch (Exception)
             {
@@ -604,7 +608,8 @@ namespace CoreView
                     }
                 }
                 processes_details.Columns[processes_details.Columns.Count - 1].Width = -2;
-                sortListView(processes_details, 0, Sorting.Order.Ascending);
+                processesSorter = new ListViewSorter(processes_details);
+                processesSorter.Sort(0);
             }
             catch (Exception)
             {
@@ -660,8 +665,8 @@ namespace CoreView
 						}
 					}
 					logs_details.Columns[logs_details.Columns.Count - 1].Width = -2;
-					// This could be problematic...
-					//sortListView(logs_details, 1, true);
+                    logsSorter = new ListViewSorter(logs_details);
+                    logsSorter.Sort(0);
 				}
             }
             catch (Exception)
