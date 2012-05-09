@@ -1,3 +1,7 @@
+== Changes (0.8.0.9) ==
+Sorting improvements. List columns can now be sorted in either order by double clicking.
+Driver names are now populated better, so they show up in the lists rather than just being invisible.
+
 == Changes (0.8.0.8) ==
 Searches are now run when you press Enter in a search box
 Fixed blank-search bug
