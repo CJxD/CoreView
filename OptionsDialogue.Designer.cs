@@ -81,7 +81,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Location = new System.Drawing.Point(44, 106);
+            this.label1.Location = new System.Drawing.Point(42, 106);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(115, 13);
             this.label1.TabIndex = 6;
@@ -100,9 +100,9 @@
             this.options_onlyerrors.AutoSize = true;
             this.options_onlyerrors.Location = new System.Drawing.Point(20, 86);
             this.options_onlyerrors.Name = "options_onlyerrors";
-            this.options_onlyerrors.Size = new System.Drawing.Size(131, 17);
+            this.options_onlyerrors.Size = new System.Drawing.Size(186, 17);
             this.options_onlyerrors.TabIndex = 4;
-            this.options_onlyerrors.Text = "Only retrieve error logs";
+            this.options_onlyerrors.Text = "Suppress \'Information\' Event Logs";
             this.options_onlyerrors.UseVisualStyleBackColor = true;
             this.options_onlyerrors.CheckedChanged += new System.EventHandler(this.options_retrieveerrors_CheckedChanged);
             // 

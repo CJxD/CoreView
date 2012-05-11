@@ -3,7 +3,7 @@
 	<general>
 		<option name="LoadWMIAtStart">True</option>
 		<option name="LoadHardwareAtStart">False</option>
-		<option name="OnlyErrorLogs">True</option>
+		<option name="SupressInformationLogs">True</option>
 		<option name="LogAgeMax">14</option>
 		<option name="ShowSplash">True</option>
 	</general>

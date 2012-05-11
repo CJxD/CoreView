@@ -136,6 +136,14 @@ namespace CoreView
                 GetDrivers();
 
                 if (abortRetrieval) return;
+                Splash.AddProgressInfo("Processing Running Processes...", 5);
+                GetProcesses();
+
+                if (abortRetrieval) return;
+                Splash.AddProgressInfo("Processing Windows Logs...", 10);
+                GetLogs();
+
+                if (abortRetrieval) return;
                 Splash.AddProgressInfo("Processing Software Information...", 15);
                 GetSoftware();
 
@@ -150,19 +158,10 @@ namespace CoreView
                 if (abortRetrieval) return;
                 Splash.AddProgressInfo("Processing Conflicts...", 3);
                 GetConflicts();
-
-                if (abortRetrieval) return;
-                Splash.AddProgressInfo("Processing Running Processes...", 5);
-                GetProcesses();
-
-                if (abortRetrieval) return;
-                Splash.AddProgressInfo("Processing Windows Logs...", 10);
-                GetLogs();
             }
             catch (Exception e)
             {
                 ErrorDialogue errorDialogue = new ErrorDialogue(e);
-                errorDialogue.Show();
             }
         }
 
@@ -456,6 +455,8 @@ namespace CoreView
 
             // Add a log entry for each instance in the following Event Types
             string[] eventTypes = new string[] { "Application", "Security", "System" };
+            string shutdownReason = "";
+            DateTime shutdownDate = new DateTime();
             foreach (string eventType in eventTypes)
             {
                 EventDataTemp = new EventLog(eventType, Environment.MachineName);
@@ -466,9 +467,9 @@ namespace CoreView
                     {
                         // Only write a log if configuration is not specific of event type
                         // Or if the log is an error when the option is set
-                        if (Configuration.OnlyErrorLogs)
+                        if (Configuration.SupressInformationLogs)
                         {
-                            if (log.EntryType == EventLogEntryType.Error)
+                            if (log.EntryType != EventLogEntryType.Information)
                             {
                                 this.Log.Add(new Log(log));
                             }
@@ -483,18 +484,26 @@ namespace CoreView
                     // This will be rerecorded each time one of these IDs are found, but only the latest one will be kept
                     if (log.EventID == 1074 || log.EventID == 6008)
                     {
-                        this.ShutdownDate = log.TimeGenerated;
-                        this.ShutdownReason = log.Message;
+                        shutdownDate = log.TimeGenerated;
+                        shutdownReason = log.Message;
                     }
                 }
             }
 
             // Replace full shutdown reason message with the pure reason only using regular expressions
-            Match match = Regex.Match(this.ShutdownReason, @"(unexpected)|reason: ([\w|(|)| ]+)", RegexOptions.IgnoreCase);
-            this.ShutdownReason = match.Groups[1].Value + match.Groups[2].Value;
+            Match match = Regex.Match(shutdownReason, @"(unexpected)|reason: ([\w|(|)| ]+)", RegexOptions.IgnoreCase);
+            shutdownReason = match.Groups[1].Value + match.Groups[2].Value;
 
             // Replace 'No title for this reason could be found' with 'unexplained'
-            if (this.ShutdownReason == "No title for this reason could be found") this.ShutdownReason = "unexplained";
+            if (shutdownReason == "No title for this reason could be found")
+            {
+                this.ShutdownReason = "No reason given.";
+            }
+            else
+            {
+                this.ShutdownReason = shutdownReason;
+            }
+            this.ShutdownDate = shutdownDate;
         }
 
         public void GetGeneral()

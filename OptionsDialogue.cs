@@ -46,7 +46,7 @@ namespace CoreView
             options_loadontabs.Checked = true;
             options_loadonstart.Checked = Configuration.LoadWMIAtStart;
             options_loadhwonstart.Checked = Configuration.LoadHardwareAtStart;
-			options_onlyerrors.Checked = Configuration.OnlyErrorLogs;
+			options_onlyerrors.Checked = Configuration.SupressInformationLogs;
 			options_logage.Text = Configuration.LogAgeMax.ToString();
 
             // If Show Splash is checked, then disable the other loading options
@@ -117,7 +117,7 @@ namespace CoreView
 
 		private void options_retrieveerrors_CheckedChanged(object sender, EventArgs e)
 		{
-			Configuration.OnlyErrorLogs = options_onlyerrors.Checked;
+			Configuration.SupressInformationLogs = options_onlyerrors.Checked;
 		}
 
 		private void options_logage_TextChanged(object sender, EventArgs e)

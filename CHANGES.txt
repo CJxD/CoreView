@@ -1,3 +1,7 @@
+== Changes (0.8.0.10) ==
+Event Logs can now be filtered by removing Information logs, rather than viewing only Error logs.
+Shutdown reasons tweaked.
+
 == Changes (0.8.0.9) ==
 Sorting improvements. List columns can now be sorted in either order by double clicking.
 Driver names are now populated better, so they show up in the lists rather than just being invisible.

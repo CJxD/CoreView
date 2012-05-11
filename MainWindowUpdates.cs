@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Management;
 using System.Windows.Forms;
 
 namespace CoreView
@@ -70,7 +71,7 @@ namespace CoreView
             {
                 currentComputer.HardDrive[harddrive_list.SelectedIndex].GetVolatileInfo();
             }
-            
+
             // Database search results before the thread has finished
             if (temporary_database_details.Items.Count != database_details.Items.Count)
             {

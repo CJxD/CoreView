@@ -26,7 +26,7 @@ namespace CoreView
 		public static bool LoadHardwareAtStart { get; set; }
 
 		// Log viewing preferences
-		public static bool OnlyErrorLogs { get; set; }
+		public static bool SupressInformationLogs { get; set; }
 		public static uint LogAgeMax { get; set; }
 
 		// Show splash screen or not
@@ -99,7 +99,11 @@ namespace CoreView
 								MessageBox.Show("There was a problem with reading config.xml. "
 									+ "Please check there are no file errors or the file is in use."
 									+ Environment.NewLine
-									+ "To rebuild the configuration, delete config.xml and re-run CoreView.",
+                                    + Environment.NewLine
+                                    + "Core View will attempt to continue. You can overwrite errors by changing a setting in Options and clicking Apply."
+                                    + Environment.NewLine
+                                    + Environment.NewLine
+									+ "To rebuild the configuration completely, delete config.xml and re-run Core View.",
 									"Configuration Failure",
 									MessageBoxButtons.OK,
 									MessageBoxIcon.Error

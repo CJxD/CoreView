@@ -170,10 +170,8 @@ namespace CoreView
         {
             try
             {
-                //this.CPU = DataRetriever.GetValueUInt16(wmiProcess, "Status");
                 this.ExecutablePath = DataRetriever.GetValue(wmiProcess, "ExecutablePath");
                 this.ImageName = DataRetriever.GetValue(wmiProcess, "Name");
-                this.IO = DataRetriever.GetValueUInt64(wmiProcess, "VirtualSize");
                 this.Memory = DataRetriever.GetValueUInt64(wmiProcess, "VirtualSize");
                 this.PID = DataRetriever.GetValueUInt16(wmiProcess, "ProcessId");
             }
@@ -181,6 +179,12 @@ namespace CoreView
             {
                 ErrorDialogue errorReporter = new ErrorDialogue(e);
             }
+        }
+
+        public void GetVoltatileInfo(ManagementObject processPerfData)
+        {
+            this.CPU = DataRetriever.GetValueUInt16(processPerfData, "PercentProcessorTime");
+            this.IO = DataRetriever.GetValueUInt64(processPerfData, "IODataBytesPerSec");
         }
     }
 
