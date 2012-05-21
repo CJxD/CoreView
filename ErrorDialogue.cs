@@ -17,6 +17,7 @@ namespace CoreView
 			{
                 if (!Configuration.PermissionErrorDisplayed)
                 {
+                    Configuration.PermissionErrorDisplayed = true;
                     MessageBox.Show("Access was denied for reading some data. "
                         + "Please try running as an administrator to see this data."
                         + Environment.NewLine
@@ -25,7 +26,6 @@ namespace CoreView
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning
                     );
-                    Configuration.PermissionErrorDisplayed = true;
                 }
 			}
             // Similar approach for all other exceptions
@@ -34,6 +34,7 @@ namespace CoreView
             {
                 if (!Configuration.ReadErrorDisplayed)
                 {
+                    Configuration.ReadErrorDisplayed = true;
                     MessageBox.Show("Some data could not be read."
                         + Environment.NewLine
                         + "Successfully gathered data will display as normal.",
@@ -41,7 +42,6 @@ namespace CoreView
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Warning
                     );
-                    Configuration.ReadErrorDisplayed = true;
                 }
             }
             // Database errors go here
@@ -49,6 +49,7 @@ namespace CoreView
             {
                 if (!Configuration.DatabaseErrorDisplayed)
                 {
+                    Configuration.DatabaseErrorDisplayed = true;
                     MessageBox.Show("There was a problem with accessing the Heuristic Database. "
                         + "Please check the database isn't opened in another program "
                         + "or contaminated.",
@@ -56,7 +57,6 @@ namespace CoreView
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error
                     );
-                    Configuration.DatabaseErrorDisplayed = true;
                 }
             }
 			else if (e is System.IO.IOException || e is UnauthorizedAccessException)

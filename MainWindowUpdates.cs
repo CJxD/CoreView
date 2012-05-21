@@ -72,6 +72,29 @@ namespace CoreView
                 currentComputer.HardDrive[harddrive_list.SelectedIndex].GetVolatileInfo();
             }
 
+            if (!Configuration.ProcessVolatileFail)
+            {
+                ManagementObject[] perfData = DataRetriever.GetWMIData("Win32_PerfFormattedData_PerfProc_Process");
+                if (perfData != null)
+                {
+                    foreach (ManagementObject processPerfData in perfData)
+                    {
+                        foreach (Process process in currentComputer.Process)
+                        {
+                            if (process.PID == DataRetriever.GetValueUInt16(processPerfData, "IDProcess"))
+                            {
+                                process.GetVoltatileInfo();
+                            }
+                        }
+                    }
+                    populateProcessesTab(null, null);
+                }
+                else
+                {
+                    Configuration.ProcessVolatileFail = true;
+                }
+            }
+
             // Database search results before the thread has finished
             if (temporary_database_details.Items.Count != database_details.Items.Count)
             {

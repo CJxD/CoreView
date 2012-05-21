@@ -39,7 +39,6 @@ namespace CoreView
                 dataGet.Start();
                 while (dataGet.IsAlive)
                 {
-                    // Do nothing!
                 }
                 currentComputer.GetGeneral();
             }

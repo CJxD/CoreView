@@ -181,10 +181,18 @@ namespace CoreView
             }
         }
 
-        public void GetVoltatileInfo(ManagementObject processPerfData)
+        public void GetVoltatileInfo()
         {
-            this.CPU = DataRetriever.GetValueUInt16(processPerfData, "PercentProcessorTime");
-            this.IO = DataRetriever.GetValueUInt64(processPerfData, "IODataBytesPerSec");
+            try
+            {
+                ManagementObject[] perfData = DataRetriever.GetWMIData("Win32_PerfFormattedData_PerfProc_Process", "IDProcess=" + this.PID);
+                this.CPU = DataRetriever.GetValueUInt16(perfData[0], "PercentProcessorTime");
+                this.IO = DataRetriever.GetValueUInt64(perfData[0], "IODataBytesPerSec");
+            }
+            catch (Exception e)
+            {
+                ErrorDialogue errorReporter = new ErrorDialogue(e);
+            }
         }
     }
 

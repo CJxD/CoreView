@@ -147,7 +147,6 @@ namespace CoreView
             abortThread.Start();
             while (abortThread.IsAlive)
             {
-                // Do nothing
             }
             dataGet = new Thread(new ThreadStart(currentComputer.RefreshAll));
             dataGet.Start();

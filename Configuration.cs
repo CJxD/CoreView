@@ -14,11 +14,15 @@ namespace CoreView
 		// The options will be automatically added to configuration files
 		// To prevent an option from being stored, write it as a field
 
-		// Booleans to set of certain error messages have been displayed already
+		// Flags to set of certain error messages have been displayed already
 		public static bool DatabaseErrorDisplayed = false;
 		public static bool FileReadErrorDisplayed = false;
 		public static bool PermissionErrorDisplayed = false;
 		public static bool ReadErrorDisplayed = false;
+
+        // Flags to stop particular volatile WMI data from being updated if the information is not accessible
+        public static bool NetworkVolatileFail = false;
+        public static bool ProcessVolatileFail = false;
 
 		// Load WMI at the start or when tabs are invoked
 		public static bool LoadWMIAtStart { get; set; }

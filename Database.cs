@@ -23,6 +23,10 @@ namespace CoreView
             abortOperation = false;
         }
 
+        /// <summary>
+        /// Prepares the database for first use. Will write a database to disk if none exists.
+        /// </summary>
+        /// <returns>True if initialisation succeeded, otherwise false.</returns>
         public static bool Initialise()
         {
             try
@@ -283,7 +287,15 @@ namespace CoreView
             }
         }
 
-        public static bool AddToDB(object deviceInstance, string tableName, int id, int instance)
+        /// <summary>
+        /// Adds a single device instance to the database.
+        /// </summary>
+        /// <param name="deviceInstance">The object to store into the database.</param>
+        /// <param name="className">The name of the class the object belongs to.</param>
+        /// <param name="id">The numerical ID of the computer of which the object belongs.</param>
+        /// <param name="instance">The numerical ID of the object in its parent class.</param>
+        /// <returns>True if the operation was successful, otherwise false.</returns>
+        public static bool AddToDB(object deviceInstance, string className, int id, int instance)
         {
             if (deviceInstance != null && Connection != null && !abortOperation)
             {
@@ -300,7 +312,7 @@ namespace CoreView
 
                         // Create a SQL statement to add values
                         command.CommandText = "INSERT INTO "
-                                + tableName
+                                + className
                                 + " VALUES('"
                                 + id + "','"
                                 + instance;
@@ -342,7 +354,12 @@ namespace CoreView
             }
         }
 
-		// Specific side-function for comments and whatnot
+		/// <summary>
+		/// Special function for adding comments to the database
+		/// </summary>
+		/// <param name="comments">The comments to add.</param>
+		/// <param name="id">The ID of the computer for which the comment belong.</param>
+        /// <returns>True if the operation was successful, otherwise false.</returns>
 		public static bool AddCommentsToDB(string comments, int id)
 		{
             if (Connection != null && !abortOperation)
@@ -354,13 +371,6 @@ namespace CoreView
 					if (Connection.State == ConnectionState.Open)
 					{
 						SQLiteCommand command = Connection.CreateCommand();
-
-						// First delete any existing elements with the given id
-						// This makes sure any table updates are correctly handled
-						command.CommandText = "DELETE FROM comments WHERE id='"
-								+ id
-								+ "'";
-						command.ExecuteNonQuery();
 
 						// Create a SQL statement to add values
 						command.CommandText = "INSERT INTO comments VALUES('"
@@ -393,6 +403,11 @@ namespace CoreView
 			}
 		}
 
+        /// <summary>
+        /// Deletes an entire computer from the database.
+        /// </summary>
+        /// <param name="id">The ID of the computer to delete.</param>
+        /// <returns>True if the operation was successful, otherwise false.</returns>
 		public static bool DeleteFromDB(int id)
 		{
             if (Connection != null && !abortOperation)
@@ -412,6 +427,12 @@ namespace CoreView
 							command.CommandText = "DELETE FROM " + classString + " WHERE id='" + id + "'";
 							command.ExecuteNonQuery();
 						}
+
+                        // Delete from comments
+                        command.CommandText = "DELETE FROM comments WHERE id='"
+                                + id
+                                + "'";
+                        command.ExecuteNonQuery();
 
 						// End
 						Connection.Close();
@@ -436,6 +457,10 @@ namespace CoreView
 			}
 		}
 
+        /// <summary>
+        /// Gets all of the ID numbers present in the database.
+        /// </summary>
+        /// <returns>An array of ID numbers.</returns>
         public static int[] GetIDNumbers()
         {
             // Gets the ID numbers of all known computers
@@ -477,6 +502,11 @@ namespace CoreView
             }
         }
 
+        /// <summary>
+        /// Gets all of the information about a computer from the database in the form of a PC class.
+        /// </summary>
+        /// <param name="id">The ID of the computer to retrieve from the database.</param>
+        /// <returns>A PC class containing all related information.</returns>
         public static PC GetComputer(int id)
         {
             if (Connection != null && !abortOperation)
@@ -570,11 +600,19 @@ namespace CoreView
             }
         }
 
+        /// <summary>
+        /// Compares 2 computers, the base and target.
+        /// Appends a numerical score to the target computer.
+        /// </summary>
+        /// <param name="targetComputer">The target computer PC instance.</param>
+        /// <param name="baseComputer">The base computer PC instance.</param>
         public static void GetScore(PC targetComputer, PC baseComputer)
         {
             Type currentClass;
             FieldInfo currentList;
             FieldInfo[] classFields;
+            IEnumerable baseList;
+            IEnumerable targetList;
             double temporaryScore;
 
             // Reset score first
@@ -590,8 +628,8 @@ namespace CoreView
                 classFields = currentClass.GetFields();
 
                 // Get the lists as generic enumerable objects
-                IEnumerable baseList = (IEnumerable)currentList.GetValue(baseComputer);
-                IEnumerable targetList = (IEnumerable)currentList.GetValue(targetComputer);
+                baseList = (IEnumerable)currentList.GetValue(baseComputer);
+                targetList = (IEnumerable)currentList.GetValue(targetComputer);
 
                 // For every field in the object of the element list
                 foreach (FieldInfo field in classFields)

@@ -93,7 +93,6 @@ namespace CoreView
 			abortPending = true;
             while(databaseWorker.IsAlive)
             {
-                // Do nothing
             }
 			abortPending = false;
             Splash.AddProgressInfo("Aborted.", 100);
@@ -161,7 +160,7 @@ namespace CoreView
             Database.AddCommentsToDB(currentComputer.Comments, currentComputer.ID);
 
             // For each device instance in device classes
-            // This could be done with ClassList.AllClasses, but nah
+            // This could be done with ClassList.DatabaseClasses, but nah
 			if (abortPending) return;
             Splash.AddProgressInfo("Adding to Database...", 5);
             for (int i = 0; i < currentComputer.Processor.Count; i++)
