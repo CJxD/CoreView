@@ -13,7 +13,7 @@
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <StartupObject>CoreView.Program</StartupObject>
-    <ApplicationIcon>Logo.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Logo.ico</ApplicationIcon>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -64,7 +64,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
-      <Private>False</Private>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Resources\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Management" />
     <Reference Include="System.Data" />
@@ -74,105 +75,79 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AboutDialogue.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AboutDialogue.Designer.cs">
-      <DependentUpon>AboutDialogue.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ClassList.cs" />
-    <Compile Include="Configuration.cs" />
-    <Compile Include="DatabaseAdd.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DatabaseAdd.Designer.cs">
+    <Compile Include="Core\ClassList.cs" />
+    <Compile Include="Core\Configuration.cs" />
+    <Compile Include="Core\HardwareContainers.cs" />
+    <Compile Include="Core\PCClass.cs" />
+    <Compile Include="Core\Program.cs" />
+    <Compile Include="Core\SoftwareContainers.cs" />
+    <Compile Include="Dialogues\DatabaseAdd.cs" />
+    <Compile Include="Dialogues\DatabaseAdd.Designer.cs">
       <DependentUpon>DatabaseAdd.cs</DependentUpon>
     </Compile>
-    <Compile Include="LicenceDialogue.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LicenceDialogue.Designer.cs">
-      <DependentUpon>LicenceDialogue.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainWindowMisc.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainWindowSorting.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainWindowSearching.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Database.cs" />
-    <Compile Include="ErrorDialogue.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ErrorDialogue.Designer.cs">
+    <Compile Include="Dialogues\ErrorControl\ErrorDialogue.cs" />
+    <Compile Include="Dialogues\ErrorControl\ErrorDialogue.Designer.cs">
       <DependentUpon>ErrorDialogue.cs</DependentUpon>
     </Compile>
-    <Compile Include="Graphs.cs" />
-    <Compile Include="HardwareContainers.cs" />
-    <Compile Include="DataRetreiver.cs" />
-    <Compile Include="MainWindowDatabase.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Dialogues\Information\AboutDialogue.cs" />
+    <Compile Include="Dialogues\Information\AboutDialogue.Designer.cs">
+      <DependentUpon>AboutDialogue.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainWindowHardwareSelection.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Dialogues\Information\LicenceDialogue.cs" />
+    <Compile Include="Dialogues\Information\LicenceDialogue.Designer.cs">
+      <DependentUpon>LicenceDialogue.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainWindowMenuStrip.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainWindowPopulation.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainWindowUpdates.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="OptionsDialogue.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="OptionsDialogue.Designer.cs">
-      <DependentUpon>OptionsDialogue.cs</DependentUpon>
-    </Compile>
-    <Compile Include="PCClass.cs" />
-    <Compile Include="SMARTData.cs" />
-    <Compile Include="MainWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainWindow.Designer.cs">
+    <Compile Include="Dialogues\MainWindow.cs" />
+    <Compile Include="Dialogues\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
+    <Compile Include="Dialogues\MainWindowUtils\MainWindowDatabase.cs" />
+    <Compile Include="Dialogues\MainWindowUtils\MainWindowHardwareSelection.cs" />
+    <Compile Include="Dialogues\MainWindowUtils\MainWindowMenuStrip.cs" />
+    <Compile Include="Dialogues\MainWindowUtils\MainWindowMisc.cs" />
+    <Compile Include="Dialogues\MainWindowUtils\MainWindowPopulation.cs" />
+    <Compile Include="Dialogues\MainWindowUtils\MainWindowSearching.cs" />
+    <Compile Include="Dialogues\MainWindowUtils\MainWindowSorting.cs" />
+    <Compile Include="Dialogues\MainWindowUtils\MainWindowUpdates.cs" />
+    <Compile Include="Dialogues\OptionsDialogue.cs" />
+    <Compile Include="Dialogues\OptionsDialogue.Designer.cs">
+      <DependentUpon>OptionsDialogue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogues\Splash.cs" />
+    <Compile Include="Dialogues\Splash.Designer.cs">
+      <DependentUpon>Splash.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="AboutDialogue.resx">
+    <Compile Include="Utilities\Database.cs" />
+    <Compile Include="Utilities\DataRetreiver.cs" />
+    <Compile Include="Utilities\Graphs.cs" />
+    <Compile Include="Utilities\SMARTData.cs" />
+    <Compile Include="Utilities\Sorting.cs" />
+    <Compile Include="Utilities\StringLogicalComparer.cs" />
+    <EmbeddedResource Include="Dialogues\DatabaseAdd.resx">
+      <DependentUpon>DatabaseAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogues\ErrorControl\ErrorDialogue.resx">
+      <DependentUpon>ErrorDialogue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogues\Information\AboutDialogue.resx">
       <DependentUpon>AboutDialogue.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DatabaseAdd.resx">
-      <DependentUpon>DatabaseAdd.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ErrorDialogue.resx">
-      <DependentUpon>ErrorDialogue.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LicenceDialogue.resx">
+    <EmbeddedResource Include="Dialogues\Information\LicenceDialogue.resx">
       <DependentUpon>LicenceDialogue.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainWindow.resx">
+    <EmbeddedResource Include="Dialogues\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="OptionsDialogue.resx">
+    <EmbeddedResource Include="Dialogues\OptionsDialogue.resx">
       <DependentUpon>OptionsDialogue.cs</DependentUpon>
-      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogues\Splash.resx">
+      <DependentUpon>Splash.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Splash.resx">
-      <DependentUpon>Splash.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -190,15 +165,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="SoftwareContainers.cs" />
-    <Compile Include="Sorting.cs" />
-    <Compile Include="Splash.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Splash.Designer.cs">
-      <DependentUpon>Splash.cs</DependentUpon>
-    </Compile>
-    <Compile Include="StringLogicalComparer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Logo.ico" />
