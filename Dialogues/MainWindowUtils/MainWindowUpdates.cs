@@ -9,6 +9,7 @@ namespace CoreView
     {
         private Graph processorGraph;
         private Graph graphicsGraph;
+        private Graph networkGraph;
         private Graph processesGraph;
 
         private void updater_Tick(object sender, EventArgs e)
@@ -72,6 +73,14 @@ namespace CoreView
                 currentComputer.HardDrive[harddrive_list.SelectedIndex].GetVolatileInfo();
             }
 
+            if (currentComputer.NetworkAdapter.Count > network_list.SelectedIndex && network_list.SelectedIndex >= 0)
+            {
+                currentComputer.NetworkAdapter[network_list.SelectedIndex].GetVolatileInfo();
+                networkGraph.Series[0].AddValue((int)currentComputer.NetworkAdapter[network_list.SelectedIndex].CurrentDownlink);
+                networkGraph.Series[1].AddValue((int)currentComputer.NetworkAdapter[network_list.SelectedIndex].CurrentUplink);
+                networkGraph.Redraw();
+            }
+
             if (!Configuration.ProcessVolatileFail)
             {
                 ManagementObject[] perfData = DataRetriever.GetWMIData("Win32_PerfFormattedData_PerfProc_Process");
@@ -119,6 +128,9 @@ namespace CoreView
             graphicsGraph = new Graph(graphics_graph_container, true);
             graphicsGraph.Series.Add(new GraphSeries("Temperature", new Pen(Color.IndianRed, 1)));
             graphicsGraph.MaxValue = 100;
+            networkGraph = new Graph(network_graph_container, true);
+            networkGraph.Series.Add(new GraphSeries("Download Speed (KB/s)", new Pen(Color.NavajoWhite, 1)));
+            networkGraph.Series.Add(new GraphSeries("Upload Speed (KB/s)", new Pen(Color.Khaki, 1)));
             processesGraph = new Graph(processes_graph_container, true);
             processesGraph.Series.Add(new GraphSeries("Usage", new Pen(Color.Khaki, 1)));
             processesGraph.MaxValue = 100;
