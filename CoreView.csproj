@@ -15,6 +15,11 @@
     <StartupObject>CoreView.Program</StartupObject>
     <ApplicationIcon>Resources\Logo.ico</ApplicationIcon>
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -29,11 +34,6 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation />
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -55,6 +55,40 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>
     </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenHardwareMonitorLib, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -81,39 +115,69 @@
     <Compile Include="Core\PCClass.cs" />
     <Compile Include="Core\Program.cs" />
     <Compile Include="Core\SoftwareContainers.cs" />
-    <Compile Include="Dialogues\DatabaseAdd.cs" />
+    <Compile Include="Dialogues\DatabaseAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Dialogues\DatabaseAdd.Designer.cs">
       <DependentUpon>DatabaseAdd.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogues\ErrorControl\ErrorDialogue.cs" />
+    <Compile Include="Dialogues\ErrorControl\ErrorDialogue.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Dialogues\ErrorControl\ErrorDialogue.Designer.cs">
       <DependentUpon>ErrorDialogue.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogues\Information\AboutDialogue.cs" />
+    <Compile Include="Dialogues\Information\AboutDialogue.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Dialogues\Information\AboutDialogue.Designer.cs">
       <DependentUpon>AboutDialogue.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogues\Information\LicenceDialogue.cs" />
+    <Compile Include="Dialogues\Information\LicenceDialogue.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Dialogues\Information\LicenceDialogue.Designer.cs">
       <DependentUpon>LicenceDialogue.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogues\MainWindow.cs" />
+    <Compile Include="Dialogues\MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Dialogues\MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogues\MainWindowUtils\MainWindowDatabase.cs" />
-    <Compile Include="Dialogues\MainWindowUtils\MainWindowHardwareSelection.cs" />
-    <Compile Include="Dialogues\MainWindowUtils\MainWindowMenuStrip.cs" />
-    <Compile Include="Dialogues\MainWindowUtils\MainWindowMisc.cs" />
-    <Compile Include="Dialogues\MainWindowUtils\MainWindowPopulation.cs" />
-    <Compile Include="Dialogues\MainWindowUtils\MainWindowSearching.cs" />
-    <Compile Include="Dialogues\MainWindowUtils\MainWindowSorting.cs" />
-    <Compile Include="Dialogues\MainWindowUtils\MainWindowUpdates.cs" />
-    <Compile Include="Dialogues\OptionsDialogue.cs" />
+    <Compile Include="Dialogues\MainWindowUtils\MainWindowDatabase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogues\MainWindowUtils\MainWindowHardwareSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogues\MainWindowUtils\MainWindowMenuStrip.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogues\MainWindowUtils\MainWindowMisc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogues\MainWindowUtils\MainWindowPopulation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogues\MainWindowUtils\MainWindowSearching.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogues\MainWindowUtils\MainWindowSorting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogues\MainWindowUtils\MainWindowUpdates.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogues\OptionsDialogue.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Dialogues\OptionsDialogue.Designer.cs">
       <DependentUpon>OptionsDialogue.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogues\Splash.cs" />
+    <Compile Include="Dialogues\Splash.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Dialogues\Splash.Designer.cs">
       <DependentUpon>Splash.cs</DependentUpon>
     </Compile>
@@ -167,13 +231,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Logo.ico" />
     <None Include="Resources\Manual.pdf" />
     <None Include="Resources\Text Logo.png" />
     <None Include="Resources\Error.png" />
     <None Include="Resources\windows-logo.png" />
-    <None Include="Resources\System.Data.SQLite_x64.dll" />
-    <None Include="Resources\System.Data.SQLite_x86.dll" />
     <None Include="Resources\OpenHardwareMonitorLib.dll" />
     <None Include="Resources\Address.png" />
     <None Include="Resources\Sharing.png" />
@@ -202,7 +263,7 @@
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
-      <ProductName>.NET Framework Client Profile</ProductName>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
@@ -225,6 +286,15 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sqlite_x64.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sqlite_x86.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\System.Data.SQLite.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
