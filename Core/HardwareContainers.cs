@@ -314,8 +314,8 @@ namespace CoreView
     {
         public string AdapterType = "N/A";
         public string Availability = "N/A";
-        public UInt16 ConnectionStatus = 0;
-        public UInt64 CurrentSpeed = 0;
+        public UInt64 CurrentDownlink = 0;
+        public UInt64 CurrentUplink = 0;
         public string ErrorDescription = "N/A";
         public string Manufacturer = "N/A";
         public string MACAddress = "N/A";
@@ -338,12 +338,9 @@ namespace CoreView
             {
                 this.AdapterType = DataRetriever.GetValue(wmiNetworkAdapter, "AdapterType");
                 this.Availability = DataRetriever.ConvertAvailability(DataRetriever.GetValueUInt16(wmiNetworkAdapter, "Availability"));
-                //this.ConnectionStatus = DataRetriever.GetValueUInt16(wmiNetworkAdapter, "NetConnectionStatus");
-                //this.CurrentSpeed = DataRetriever.GetValueUInt64(wmiNetworkAdapter, "Speed");
                 this.ErrorDescription = DataRetriever.GetValue(wmiNetworkAdapter, "ErrorDescription");
                 this.Manufacturer = DataRetriever.GetValue(wmiNetworkAdapter, "Manufacturer");
                 this.MACAddress = DataRetriever.GetValue(wmiNetworkAdapter, "MACAddress");
-                //this.MaxSpeed = DataRetriever.GetValueUInt64(wmiNetworkAdapter, "MaxSpeed");
                 this.Name = DataRetriever.GetValue(wmiNetworkAdapter, "Caption");
                 this.PhysicalAdapter = DataRetriever.GetValueBool(wmiNetworkAdapter, "PhysicalAdapter");
                 this.Status = DataRetriever.GetValue(wmiNetworkAdapter, "Status");
@@ -351,6 +348,16 @@ namespace CoreView
             catch (Exception e)
             {
                 ErrorDialogue errorReporter = new ErrorDialogue(e);
+            }
+        }
+
+        public void GetVolatileInfo()
+        {
+            try
+            {
+            }
+            catch (Exception)
+            {
             }
         }
     }
